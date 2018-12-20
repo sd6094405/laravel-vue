@@ -1,10 +1,9 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                32123
+            <div class="col-md-8 article-list">
+                
             </div>
-            <v-right></v-right>
         </div>
     </div> <!-- /container -->
 </template>
@@ -15,20 +14,21 @@
         data() {
             return {
                 datas: ''
-
             }
         },
-        components: {
-            'v-right': right,
+        methods:{
+          getArticle(articleId){
+              var id = articleId.article_id;
+              api.fetch('/api/article/'+id)
+                  .then(res=>{
+                      if(res.data.code == 200){
+                          this.datas = res.data.data
+                      }
+                  })
+          }
         },
         mounted() {
-            // api.fetch('/article')
-            //     .then(res => {
-            //         if (res.data.code == 200) {
-            //             this.articles = res.data.data.lists;
-            //         }
-            //         console.log(this.articles);
-            //     })
+            this.getArticle(this.$route.params)
         }
     }
 </script>

@@ -25,7 +25,7 @@ const routes = [
     },
     {path: '/index', name: 'home', component: Index, meta: {title: '首页'}},
 
-    {path: '/article', name: 'article', component: Article, meta: {title: '文章'}},
+    {path: '/article/:article_id', name: 'article', component: Article, meta: {title: '文章'}},
 ];
 
 const router = new Router({

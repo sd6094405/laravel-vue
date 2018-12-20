@@ -1,9 +1,7 @@
 <template>
     <div>
         <v-header></v-header>
-        <v-body></v-body>
         <router-view></router-view>
-        <v-footer></v-footer>
     </div>
 </template>
 <script>
@@ -17,8 +15,6 @@
         },
         components: {
             'v-header': header,
-            'v-body': body,
-            'v-footer': footer
         },
         computed: {},
         methods: {},

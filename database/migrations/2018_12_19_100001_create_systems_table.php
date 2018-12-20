@@ -15,9 +15,10 @@ class CreateSystemsTable extends Migration
     {
         Schema::create('systems', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('key',255)->unique();
-            $table->string('value');
+            $table->string('seo')->comment('SEO');
             $table->string('desc')->comment('描述信息');
+            $table->string('filing')->comment('备案号');
+            $table->string('signature')->comment('签名');
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';

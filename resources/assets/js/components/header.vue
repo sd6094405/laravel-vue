@@ -10,7 +10,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="https://moell.cn">moell</a>
+                    <a class="navbar-brand" href="https://moell.cn">hhb</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -58,16 +58,32 @@
 <script>
     import * as api from '../config/httpService'
     export default {
-        methods(){
-          function getSystem(){
-              api.fetch('/init')
-                  .then(res => function(){
+        data(){
+          return {
 
+          }
+        },
+        methods:{
+          getSystem(){
+              api.postData('/api/setting')
+                  .then(res => function(){
+                    if(res.data.code == 200){
+                        this.systemData = res.data.data;
+                    }
               });
           }
         },
         mounted() {
-
+            this.getSystem();
         }
     }
 </script>
+<style scoped>
+    .navbar-default .navbar-toggle {
+        border-color: #F46660;
+    }
+    .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
+        background-color: #F46660;
+        border-color: #F46660 !important;
+    }
+</style>

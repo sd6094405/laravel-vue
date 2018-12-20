@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Home;
+namespace App\Http\Controllers\Home\Api;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Articles;
@@ -16,7 +16,16 @@ class ArticleController extends BaseController
      */
     public function index(Request $request)
     {
-        return view('index');
+        $data = (new Articles)->findByConditionPage(
+            null,
+            null,
+            null,
+            $request->page,
+            $request->pageSize,
+            null,
+            null
+        );
+        return returnJson($data);
     }
 
     /**
@@ -48,7 +57,7 @@ class ArticleController extends BaseController
      */
     public function show($id)
     {
-        return view('index');
+        return returnJson((new Articles)->findByConditionOne(['id'=>$id]));
     }
 
     /**

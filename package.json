@@ -20,6 +20,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "mavon-editor": "^2.6.17",
         "vue-router": "^3.0.2"
     }
 }

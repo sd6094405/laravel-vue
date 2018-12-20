@@ -2,17 +2,19 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
+
+                <!--文章数据-->
                 <ol class="article-list">
                     <li v-for="article in articles">
-                        <h4 class="title">
-                            <router-link :to="'/article/'+article.id">
+                        <h2 class="title">
+                            <router-link :to="{name:'article',query:article.id }">
                                 {{article.title}}
                             </router-link>
                             <!--<a  :href="'/article/'+article.id">-->
-                                <!--{{article.title}}-->
+                            <!--{{article.title}}-->
                             <!--</a>-->
 
-                        </h4>
+                        </h2>
                         <p class="desc">
                             {{article.desc}}
                         </p>
@@ -33,6 +35,8 @@
                         </p>
                     </li>
                 </ol>
+
+                <!--分页-->
                 <ul class="pagination" role="navigation">
 
                     <li class="page-item disabled" aria-disabled="true" aria-label="« Previous">
@@ -59,6 +63,7 @@
 <script>
     import * as api from '../config/httpService'
     import right from './right'
+
     export default {
         data() {
             return {
@@ -75,7 +80,6 @@
                     if (res.data.code == 200) {
                         this.articles = res.data.data.lists;
                     }
-                    console.log(this.articles);
                 })
         }
     }

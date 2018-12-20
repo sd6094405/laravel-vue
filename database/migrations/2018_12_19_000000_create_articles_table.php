@@ -16,7 +16,7 @@ class CreateArticlesTable extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title', 20)->comment('标题');
-            $table->string('desc', 100)->nullable($value = true)->comment('描述');
+            $table->text('desc')->nullable($value = true)->comment('描述');
             $table->string('tag_id', 20)->nullable($value = true)->comment('标签');
             $table->text('body')->comment('内容');
             $table->integer('read')->nullable($value = true)->default(0)->comment('阅读量');

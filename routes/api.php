@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['namespace' => 'Home\Api'], function () {
+    Route::resource('/article', 'ArticleController',['only' => ['index', 'show']]);
+    Route::post('/setting','IndexController@setting');
 });
+

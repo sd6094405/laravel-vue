@@ -6,15 +6,12 @@
             </div>
             <div class="panel-body">
                 <div class="row text-center">
-                    <img src="http://blog-image.moell.cn/avatars/wxspzIISH98xMRzV68phGyxsEWPY6mnsBtYxRGP8.jpeg"
+                    <img src="/profile_photo.jpg"
                          class="img-circle author-avatar" alt="User Image">
                 </div>
                 <div class="row text-center author-footer">
                                         <span class="icon-github" style="padding-left:20px;">
                     <a href="https://github.com/moell-peng" target="_blank">GitHub</a>
-                </span>
-                    <span class="icon-sina-weibo" style="padding-left:20px;margin-left:10px;">
-                    <a href="http://weibo.com/u/2053610657" target="_blank">Weibo</a>
                 </span>
                 </div>
             </div>
@@ -62,3 +59,6 @@
         </div>
     </div>
 </template>
+<script>
+
+</script>

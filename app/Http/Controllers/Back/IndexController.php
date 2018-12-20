@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Home;
+namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Systems;
@@ -10,6 +10,6 @@ class IndexController extends BaseController
 {
     public function index()
     {
-        return view('index');
+        return view('back.index');
     }
 }

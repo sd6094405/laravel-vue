@@ -15,7 +15,11 @@
 
 Route::group(['namespace' => 'Home'], function () {
     Route::get('/', 'IndexController@index');
-    Route::get('/setting','IndexController@setting');
     Route::get('/index', 'IndexController@index');
     Route::resource('/article', 'ArticleController',['only' => ['index', 'show']]);
+
+});
+
+Route::group(['namespace'=>'Back','prefix'=>'back'],function(){
+    Route::get('/','IndexController@index');
 });

@@ -9,8 +9,11 @@
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import router from './router/index.js'
-
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 window.Vue = require('vue');
+//use
+Vue.use(mavonEditor);
 Vue.use(VueRouter);
 
 /**

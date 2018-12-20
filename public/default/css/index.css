@@ -1,15 +1,27 @@
+body {
+    background-color: #F0F2F5;
+    font-family: "Roboto", "Raleway", "Open Sans", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-weight: 100;
+
+    -webkit-font-smoothing: antialiased; /*chrome、safari*/
+
+    -moz-osx-font-smoothing: grayscale; /*firefox*/
+}
+
 .navbar {
     margin-bottom: 0;
 }
+
 .navbar-default, .jumbotron {
-    background-color: #3D93A3;
+    background-color: #F46660;
 }
 
-.navbar-default, .jumbotron a{
+.navbar-default, .jumbotron a {
     color: white;
 }
 
-.navbar-default .navbar-nav>li>a {
+.navbar-default .navbar-nav > li > a {
     color: white;
 }
 
@@ -17,7 +29,7 @@
     color: white;
 }
 
-.navbar-default .navbar-brand:focus,.navbar-default .navbar-brand:hover {
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
     color: white;
     background-color: transparent;
 }
@@ -35,19 +47,22 @@
     background-color: #fff;
 }
 
-.panel-default>.panel-heading {
-    color: #3D93A3;
+.panel-default > .panel-heading {
+    color: #F46660;
     background-color: white;
     border-color: #ddd
 }
 
 .color-white {
-    color:white;
+    color: white;
 }
 
 .article-list {
-    padding-left: 0;
+    background-color: #fff;
+    padding: 10px;
     list-style: none;
+    border: 1px solid #ddd;
+    border-radius: 0;
 }
 
 .article-list li {
@@ -55,30 +70,41 @@
 }
 
 .m-t-25 {
-    margin-top:25px;
+    margin-top: 25px;
+}
+
+.title {
+    font-weight: bold;
+    color: #333333;
 }
 
 .article-list .title {
-    font-size:16px;
+    font-size: 20px;
+}
+
+.desc {
+    font-size: 16px;
 }
 
 .article-list .desc {
-    margin-top:15px;
-    word-break:break-all;
-    color:#616161;
+    margin-top: 15px;
+    word-break: break-all;
+    color: #616161;
 }
 
 .article-list .info {
-    margin-top:15px;
-    color:#616161;
+    margin-top: 15px;
+    color: #616161;
 }
 
 .article-list .info span {
     padding-right: 5px;
 }
+
 .icon-github {
     background: url('/default/icons/github.png') no-repeat;
     background-size: 16px 16px;
+
 }
 
 .icon-sina-weibo {
@@ -86,10 +112,15 @@
     background-size: 16px 16px;
 }
 
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #F46660 !important;
+    border-color: #F46660 !important;
+}
+
 #footer {
-    border-top:1px solid #ddd;
-    margin-top:20px;
-    height:60px;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+    height: 80px;
     background-color: #fafafa;
     background: -webkit-linear-gradient(#fafafa, #ffffff); /* Safari 5.1 - 6.0 */
     background: -o-linear-gradient(#fafafa #ffffff); /* Opera 11.1 - 12.0 */
@@ -97,19 +128,19 @@
     background: linear-gradient(#fafafa, #ffffff); /* 标准的语法 */
 }
 
-.author .author-footer{
-    margin-top:20px;
+.author .author-footer {
+    margin-top: 20px;
 }
 
 .author .author-avatar {
-    max-width:150px;
+    max-width: 150px;
 }
 
 a {
     color: #34495e;
 }
 
-.markdown-preview img{
+.markdown-preview img {
     max-width: 100%;
 }
 
@@ -119,5 +150,5 @@ a {
 }
 
 pre {
-    padding:0;
+    padding: 0;
 }

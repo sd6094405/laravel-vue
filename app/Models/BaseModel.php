@@ -95,14 +95,18 @@ class BaseModel extends Model
     /**
      * 根据条件获取所有数据
      * @param array|null $conditions
+     * @param null $selectColumn
      * @param String $with
      * @param array $sortArray
      * @param array $in // 0=key  1=value
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function findByConditionAll(Array $conditions = null, String $with = '', $sortArray = [], Array $in = null)
+    public function findByConditionAll(Array $conditions = null, $selectColumn = null, String $with = '', $sortArray = [], Array $in = null)
     {
         $query = $this->query();
+        if($selectColumn){
+            $query->select($selectColumn);
+        }
         if ($with) {
             $query->with($with);
         }
