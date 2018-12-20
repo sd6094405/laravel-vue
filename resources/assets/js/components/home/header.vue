@@ -56,7 +56,7 @@
 </template>
 
 <script>
-    import * as api from '../config/httpService'
+    import * as api from '../../config/httpService'
     export default {
         data(){
           return {

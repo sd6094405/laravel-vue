@@ -5,9 +5,9 @@ import beforeEach from './beforeEach'
 
 Vue.use(Router);
 
-const App = resolve => require(['../app'], resolve);
-const Index = resolve => require(['../pages/home'], resolve);
-const Article = resolve => require(['../pages/home/article'], resolve);
+const App = resolve => require(['../admin'], resolve);
+const Index = resolve => require(['../pages/back/index'], resolve);
+const Article = resolve => require(['../pages/back/article'], resolve);
 
 const routes = [
     {

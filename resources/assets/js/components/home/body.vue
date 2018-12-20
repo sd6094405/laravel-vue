@@ -61,7 +61,7 @@
 </template>
 
 <script>
-    import * as api from '../config/httpService'
+    import * as api from '../../config/httpService'
     import right from './right'
 
     export default {

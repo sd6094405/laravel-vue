@@ -6,14 +6,18 @@
  */
 
 // require('./bootstrap');
-import App from './App.vue'
+import Admin from './Admin.vue'
 import VueRouter from 'vue-router'
-import router from './router/index.js'
-// import mavonEditor from 'mavon-editor'
-// import 'mavon-editor/dist/css/index.css'
+import router from './router/admin.js'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+import './my-theme/index.less';
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
 window.Vue = require('vue');
 //use
-// Vue.use(mavonEditor);
+Vue.use(mavonEditor);
+Vue.use(iView);
 Vue.use(VueRouter);
 
 /**
@@ -26,5 +30,5 @@ Vue.use(VueRouter);
 const app = new Vue({
     // el: '#app',
     router,
-    render: (h) => h(App)
+    render: (h) => h(Admin)
 }).$mount('#app');

@@ -5,9 +5,7 @@
     </div>
 </template>
 <script>
-    import header from './components/header';
-    import body from './components/body';
-    import footer from './components/footer'
+    import header from './components/home/header';
 
     export default {
         data() {

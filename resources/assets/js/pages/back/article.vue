@@ -2,14 +2,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 article-list">
-                
+                {{datas.body}}
             </div>
         </div>
     </div> <!-- /container -->
 </template>
 <script>
-    import * as api from '../config/httpService'
-    import right from '../components/right'
+    import * as api from '../../config/httpService'
     export default {
         data() {
             return {
