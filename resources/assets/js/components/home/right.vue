@@ -36,7 +36,7 @@
                 <li class="list-group-item">
                     <span class="badge">8330</span>
                     <a href="https://moell.cn/article/1" target="_blank">
-                        Moell Blog 安装文档...
+                        Laravel-Vue-Blog 安装文档...
                     </a>
                 </li>
             </ul>
