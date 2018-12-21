@@ -2,13 +2,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 article-list">
-                {{datas.body}}
+                <div v-html="datas.body" class="markdown-body">{{datas.body}}</div>
             </div>
         </div>
     </div> <!-- /container -->
 </template>
 <script>
-    import * as api from '../../config/httpService'
+    import * as api from '../../../config/httpService'
+    import 'github-markdown-css'
     export default {
         data() {
             return {
@@ -31,3 +32,6 @@
         }
     }
 </script>
+<style scoped>
+
+</style>

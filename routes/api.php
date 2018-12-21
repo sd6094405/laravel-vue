@@ -13,8 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::group(['namespace'=>'Back'],function(){
+    Route::post('/article','ArticleController@create');
+});
+
 Route::group(['namespace' => 'Home\Api'], function () {
     Route::resource('/article', 'ArticleController',['only' => ['index', 'show']]);
     Route::post('/setting','IndexController@setting');
+
 });
 

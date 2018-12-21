@@ -55,8 +55,8 @@
 </template>
 
 <script>
-    import * as api from '../../config/httpService'
-    import right from '../../components/home/right'
+    import * as api from '../../../config/httpService'
+    import right from '../../../components/home/right'
     export default {
         data() {
             return {

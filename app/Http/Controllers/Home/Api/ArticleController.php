@@ -57,7 +57,10 @@ class ArticleController extends BaseController
      */
     public function show($id)
     {
-        return returnJson((new Articles)->findByConditionOne(['id'=>$id]));
+        $data = (new Articles)->findByConditionOne(['id'=>$id])->toArray();
+         $parsedown = new \Parsedown();
+         $data['body'] = $parsedown->setMarkupEscaped(true)->text($data['body']);
+        return returnJson($data);
     }
 
     /**

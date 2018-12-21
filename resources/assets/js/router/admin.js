@@ -6,12 +6,15 @@ import beforeEach from './beforeEach'
 Vue.use(Router);
 
 const App = resolve => require(['../admin'], resolve);
-const Index = resolve => require(['../pages/back/index'], resolve);
-const Article = resolve => require(['../pages/back/article'], resolve);
+const Index = resolve => require(['../pages/back/dashboard'], resolve);
+
+const Article = resolve => require(['../pages/back/article/index'], resolve);
+const ArticleCreate = resolve => require(['../pages/back/article/create'], resolve);
+
 
 const routes = [
     {
-        path: '/', name: 'App', component: App,redirect: { name: 'home' }
+        path: '/', name: 'App', component: App, redirect: {name: 'home'}
         // children: [
         //     {
         //         // 当 /user/:id/profile 匹配成功，
@@ -23,9 +26,11 @@ const routes = [
         //     }
         // ]
     },
-    {path: '/index', name: 'home', component: Index, meta: {title: '首页'}},
+    {path: '/back/index', name: 'home', component: Index, meta: {title: '首页'}},
+    {path: '/back/article', name: 'article', component: Article, meta: {title: '文章列表'}},
+    {path: '/back/article/create', name: 'articleCreate', component: ArticleCreate, meta: {title: '新文章'}},
 
-    {path: '/article/:article_id', name: 'article', component: Article, meta: {title: '文章'}},
+    // {path: '/article/:article_id', name: 'article', component: Article, meta: {title: '文章'}},
 ];
 
 const router = new Router({

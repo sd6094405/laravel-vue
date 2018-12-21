@@ -13,15 +13,17 @@
     <meta name="author" content="hhb"/>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {{--<link href="{{ mix('css/app.css') }}" rel="stylesheet">--}}
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
+{{--<link href="{{ mix('css/app.css') }}" rel="stylesheet">--}}
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="{{ asset('default/css/bootstrap.min.css') }}">
+    {{--<link rel="stylesheet" href="{{ asset('default/css/bootstrap.min.css') }}">--}}
 
     <!-- Animate.css -->
-    <link rel="stylesheet" href="{{ asset('default/css/animate.css') }}">
+    {{--<link rel="stylesheet" href="{{ asset('default/css/animate.css') }}">--}}
 
 
     <link rel="stylesheet" href="{{ asset('default/css/index.css') }}">
@@ -32,8 +34,8 @@
 
 <script src="{{mix('js/admin.js')}}"></script>
 
-<script src="{{asset('default/js/jQuery-2.2.0.min.js')}}"></script>
+{{--<script src="{{asset('default/js/jQuery-2.2.0.min.js')}}"></script>--}}
 <!-- Bootstrap -->
-<script src="{{asset('default/js/bootstrap.min.js')}}"></script>
+{{--<script src="{{asset('default/js/bootstrap.min.js')}}"></script>--}}
 </body>
 </html>

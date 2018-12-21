@@ -22,4 +22,7 @@ Route::group(['namespace' => 'Home'], function () {
 
 Route::group(['namespace'=>'Back','prefix'=>'back'],function(){
     Route::get('/','IndexController@index');
+    Route::get('/article','IndexController@index');
+    Route::get('/article/create','IndexController@index');
+//    Route::get('/article/create','IndexController@index');
 });

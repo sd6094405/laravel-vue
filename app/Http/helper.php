@@ -166,8 +166,8 @@ if (!function_exists('getOffset')) {
 if (!function_exists('returnJson')) {
     function returnJson($data = '',$code = 200,$message = null)
     {
-        $result['code'] = $code;
-        $result['status'] = $code== 200 ? 'success' : 'error';
+        $result['code'] = $code == 200 | $code == '' ? 200 : $code;
+        $result['status'] = $code == 200 | $code == '' ? 'success' : 'error';
         $result['msg'] = $message;
         $result['data'] = $data;
         return response(

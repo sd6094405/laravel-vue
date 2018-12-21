@@ -9,16 +9,20 @@
 import Admin from './Admin.vue'
 import VueRouter from 'vue-router'
 import router from './router/admin.js'
+//markdown编辑器
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-import './my-theme/index.less';
+//iView
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+import './my-theme/index.less';
+
 window.Vue = require('vue');
 //use
 Vue.use(mavonEditor);
 Vue.use(iView);
 Vue.use(VueRouter);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
