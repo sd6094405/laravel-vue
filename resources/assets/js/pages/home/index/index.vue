@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="加载中...">
                 <!--文章数据-->
                 <ol class="article-list">
                     <li v-for="article in articles">
@@ -57,24 +57,33 @@
 <script>
     import * as api from '../../../config/httpService'
     import right from '../../../components/home/right'
+
     export default {
         data() {
             return {
-                articles: ''
-
+                articles: '',
+                fullscreenLoading: true
             }
+        },
+        methods: {
+            getArticles() {
+                api.fetch('/api/article')
+                    .then(res => {
+                        if (res.data.code == 200) {
+                            this.articles = res.data.data.lists;
+                            this.fullscreenLoading = false;
+                        }
+                    })
+            }
+
         },
         components: {
             'v-right': right,
         },
         mounted() {
             //获取列表数据
-            api.fetch('/api/article')
-                .then(res => {
-                    if (res.data.code == 200) {
-                        this.articles = res.data.data.lists;
-                    }
-                })
+            this.getArticles();
+
         }
     }
 </script>

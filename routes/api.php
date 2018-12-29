@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,8 +11,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['namespace'=>'Back'],function(){
-    Route::post('/article','ArticleController@create');
+Route::group(['namespace'=>'Back','prefix'=>'back'],function(){
+    Route::get('/article','ArticleController@getLists');
+    Route::post('/article/create','ArticleController@create');
 });
 
 Route::group(['namespace' => 'Home\Api'], function () {

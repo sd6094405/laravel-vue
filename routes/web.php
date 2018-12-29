@@ -12,17 +12,14 @@
 */
 
 
-
 Route::group(['namespace' => 'Home'], function () {
     Route::get('/', 'IndexController@index');
     Route::get('/index', 'IndexController@index');
-    Route::resource('/article', 'ArticleController',['only' => ['index', 'show']]);
+    Route::resource('/article', 'ArticleController', ['only' => ['index', 'show']]);
 
 });
 
-Route::group(['namespace'=>'Back','prefix'=>'back'],function(){
-    Route::get('/','IndexController@index');
-    Route::get('/article','IndexController@index');
-    Route::get('/article/create','IndexController@index');
-//    Route::get('/article/create','IndexController@index');
+    Route::group(['namespace' => 'Back', 'prefix' => 'back'], function () {
+        Route::get('/', 'IndexController@index');
+    Route::match(['post', 'get'], '{all}', 'IndexController@index')->where(['all' => '.*']);
 });

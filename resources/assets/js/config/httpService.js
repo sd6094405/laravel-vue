@@ -1,7 +1,12 @@
 import axios from 'axios';
+
+export const backUrl = '/api/back/';
+export const baseUrl = '/api/';
+
 /* ajax-get */
 export const fetch = (url,data={}) =>{
     return new Promise((resolve,reject) => {
+
         axios({
             method:'get',
             url:url,
@@ -10,12 +15,30 @@ export const fetch = (url,data={}) =>{
                 'X-Requested-With': 'XMLHttpRequest'
             },
         }).then(resp=>{
-            resolve(resp)
+            resolve(resp);
+
         }).catch(err=>{
             reject(err);
+
         })
     })
 };
+
+/* json-post */
+export const postJson = (url,data={}) =>{
+    return new Promise((resolve,reject)=>{
+        axios({
+            method:'post',
+            url:url,
+            data:data,
+            headers:{
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+        }).then(resp=>{
+            resolve(resp)
+        },reject)
+    })
+}
 
 /* ajax-post */
 export const postData = (url,data={}) =>{

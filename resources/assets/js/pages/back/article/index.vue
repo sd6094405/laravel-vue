@@ -1,93 +1,131 @@
 <template>
-    <Layout :style="{marginLeft: '200px'}">
-        <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)',fontSize:'18px'}">文章管理</Header>
-        <Content :style="{padding: '0 16px 16px'}">
+    <div class="table">
+        <div class="crumbs">
+            <el-breadcrumb separator="/">
+                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 文章管理</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+        <div class="container">
+            <div class="handle-box">
+                <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
+                <el-button type="primary" icon="search" @click="search">搜索</el-button>
+            </div>
+            <el-table :data="articles" border class="table" ref="multipleTable">
+                <el-table-column type="selection" width="55" align="center"></el-table-column>
+                <el-table-column prop="id" label="id" sortable width="80">
+                </el-table-column>
+                <el-table-column prop="title" label="标题">
+                </el-table-column>
+                <el-table-column prop="tag_id" label="分类" width="140">
+                </el-table-column>
+                <el-table-column prop="read" label="阅读数" width="80">
+                </el-table-column>
+                <el-table-column prop="created_at" label="创建日期" width="120">
+                </el-table-column>
+                <el-table-column prop="updated_at" label="更新日期" width="120">
+                </el-table-column>
+                <el-table-column label="操作" width="180" align="center">
+                    <template slot-scope="scope">
+                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑
+                        </el-button>
+                        <el-button type="text" icon="el-icon-delete" class="red"
+                                   @click="handleDelete(scope.$index, scope.row)">删除
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="pagination">
+                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next"
+                               :total="1000">
+                </el-pagination>
+            </div>
+        </div>
 
-            <Breadcrumb :style="{margin: '16px 0'}">
-                <Input suffix="ios-search" placeholder="请输入数据" style="width: auto"/>
-                <Button type="primary" :to="{name:'articleCreate'}">新文章</Button>
-            </Breadcrumb>
-            <!--<Table border :columns="columns" :data="data">-->
-                <!--<template slot-scope="{ row }" slot="name">-->
-                    <!--<strong>{{ row.name }}</strong>-->
-                <!--</template>-->
-                <!--<template slot-scope="{ row, index }" slot="action">-->
-                    <!--<Button type="info" size="small" style="margin-right: 5px" @click="show(index)">编辑</Button>-->
-                    <!--<Button type="error" size="small" @click="remove(index)">删除</Button>-->
-                <!--</template>-->
-            <!--</Table>-->
-
-        </Content>
-    </Layout>
+        <!-- 删除提示框 -->
+        <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
+            <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="delVisible = false">取 消</el-button>
+                <el-button type="primary" @click="deleteRow">确 定</el-button>
+            </span>
+        </el-dialog>
+    </div>
 </template>
+
 <script>
     import * as api from '../../../config/httpService'
 
     export default {
         data() {
             return {
-                columns: [
-                    {
-                        title: 'id',
-                        slot: 'id'
-                    },
-                    {
-                        title: '标题',
-                        key: 'title'
-                    },
-                    {
-                        title: '阅读量',
-                        key: 'read'
-                    },
-                    {
-                        title: '创建时间',
-                        key: 'created_at'
-                    },
-                    {
-                        title: '操作',
-                        slot: 'action',
-                        width: 150,
-                        align: 'center'
-                    }
-                ],
-                data: [
-                    {
-                        id: '1',
-                        title: 'Docker',
-                        read: '65628',
-                        created_at: '2018-12-21 16:24:37'
-                    },
-                    {
-                        id: '2',
-                        title: 'Linux',
-                        read: '65628',
-                        created_at: '2018-12-21 16:24:37'
-                    },
-                    {
-                        id: '3',
-                        title: 'GoLang',
-                        read: '65628',
-                        created_at: '2018-12-21 16:24:37'
-                    },
-                    {
-                        id: '4',
-                        title: 'PHP',
-                        read: '65628',
-                        created_at: '2018-12-21 16:24:37'
-                    }
-                ]
+                articles: '',
+                cur_page: 1,
+                is_search: false,
+                editVisible: false,
+                delVisible: false,
+
             }
         },
+        created() {
+        },
+        mounted() {
+            this.getArticles();
+        },
+        computed: {},
         methods: {
-            show(index) {
-                this.$Modal.info({
-                    title: '文章信息',
-                    content: `id：${this.data[index].id}<br>title：${this.data[index].title}<br>read：${this.data[index].read}<br>created_at：${this.data[index].created_at}`
-                })
+            search() {
+
             },
-            remove(index) {
-                this.data.splice(index, 1);
+            getArticles() {
+                api.fetch(api.backUrl + 'article')
+                    .then(res => {
+                        this.articles = res.data.data.lists;
+
+                    })
+            },
+            handleCurrentChange() {
+
+            },
+            handleEdit(index, row) {
+
+            },
+            handleDelete(index, row) {
+
+            },
+            deleteRow() {
+
             }
+
         }
     }
+
 </script>
+
+<style scoped>
+    .handle-box {
+        margin-bottom: 20px;
+    }
+
+    .handle-select {
+        width: 120px;
+    }
+
+    .handle-input {
+        width: 300px;
+        display: inline-block;
+    }
+
+    .del-dialog-cnt {
+        font-size: 16px;
+        text-align: center
+    }
+
+    .table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .red {
+        color: #ff0000;
+    }
+</style>

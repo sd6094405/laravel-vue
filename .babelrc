@@ -1,6 +1,12 @@
 {
-  "plugins": [["import", {
-    "libraryName": "node_modules/iview",
-    "libraryDirectory": "node_modules/src/components"
-  }]]
+  "presets": [["es2015", { "modules": false }]],
+  "plugins": [
+    [
+      "component",
+      {
+        "libraryName": "element-ui",
+        "styleLibraryName": "theme-chalk"
+      }
+    ]
+  ]
 }

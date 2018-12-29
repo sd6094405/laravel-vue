@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -6,16 +5,32 @@
  */
 
 // require('./bootstrap');
+import Vue from 'vue';
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import router from './router/index.js'
 // import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
-import 'github-markdown-css'
-window.Vue = require('vue');
+// import 'mavon-editor/dist/css/index.css'
+import {Loading, Button, Select, Pagination} from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css'
+
+
+Vue.directive('highlight', (el) => {
+    let blocks = el.querySelectorAll('pre code')
+    blocks.forEach((block) => {
+        hljs.highlightBlock(block)
+    })
+})
+// window.Vue = require('vue');
+
 //use
-// Vue.use(mavonEditor);
 Vue.use(VueRouter);
+Vue.use(Button);
+Vue.use(Loading);
+Vue.use(Pagination);
+Vue.use(Select);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

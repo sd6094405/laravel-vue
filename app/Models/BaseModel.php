@@ -175,7 +175,7 @@ class BaseModel extends Model
         }
 
         return [
-            'total'=>$query->count(),
+            'total'=>$this->query()->count(),
             'lists'=>$query->get()
         ];
     }

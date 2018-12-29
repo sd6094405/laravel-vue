@@ -5,32 +5,75 @@ import beforeEach from './beforeEach'
 
 Vue.use(Router);
 
-const App = resolve => require(['../admin'], resolve);
-const Index = resolve => require(['../pages/back/dashboard'], resolve);
-
-const Article = resolve => require(['../pages/back/article/index'], resolve);
-const ArticleCreate = resolve => require(['../pages/back/article/create'], resolve);
-
+const App = resolve => require(['../pages/back/common/Home'], resolve);
+const Login = resolve => require(['../pages/back/login'], resolve);
+const DashBoard = resolve => require(['../pages/back/dashboard'], resolve);
+const Article = resolve => require(['../pages/back/article/index'],resolve);
+const ArticleCreate = resolve => require(['../pages/back/article/create'],resolve);
+const ArticleTags = resolve => require(['../pages/back/article/tags'],resolve);
+const Setting = resolve => require(['../pages/back/setting/index'],resolve);
+const SettingLinks = resolve => require(['../pages/back/setting/links'],resolve);
 
 const routes = [
     {
-        path: '/', name: 'App', component: App, redirect: {name: 'home'}
-        // children: [
-        //     {
-        //         // 当 /user/:id/profile 匹配成功，
-        //         // UserProfile 会被渲染在 User 的 <router-view> 中
-        //         path: '/index',
-        //         name:'index',
-        //         component: Index,
-        //         meta: {title: '首页'}
-        //     }
-        // ]
+        path: '/',
+        redirect: '/back/dashboard'
     },
-    {path: '/back/index', name: 'home', component: Index, meta: {title: '首页'}},
-    {path: '/back/article', name: 'article', component: Article, meta: {title: '文章列表'}},
-    {path: '/back/article/create', name: 'articleCreate', component: ArticleCreate, meta: {title: '新文章'}},
+    {
+        path: '/back',
+        redirect: '/back/dashboard'
+    },
+    {
+        path: '/',
+        name: 'App',
+        component: App,
+        meta: {title: '自述文件'},
+        children: [
+            {
+                path: '/back/dashboard',
+                name: 'dashboard',
+                component: DashBoard,
+                meta: {title: '系统首页'}
+            },
+            {
+                path: '/back/article',
+                name: 'article',
+                component: Article,
+                meta: {title: '文章管理'}
+            },
+            {
+                path: '/back/article/create',
+                name: 'articleCreate',
+                component: ArticleCreate,
+                meta: {title: '新文章'}
+            },
+            {
+                path: '/back/article/tags',
+                name: 'articleTags',
+                component: ArticleTags,
+                meta: {title: '标签管理'}
+            },
+            {
+                path: '/back/setting',
+                name: 'Setting',
+                component: Setting,
+                meta: {title: '系统设置'}
+            },
+            {
+                path: '/back/setting/links',
+                name: 'SettingLinks',
+                component: SettingLinks,
+                meta: {title: '友链管理'}
+            },
+        ]
+    },
+    {
+        path: '/back/login',
+        name: 'login',
+        component: Login,
+        meta: {title: '登录'}
+    }
 
-    // {path: '/article/:article_id', name: 'article', component: Article, meta: {title: '文章'}},
 ];
 
 const router = new Router({

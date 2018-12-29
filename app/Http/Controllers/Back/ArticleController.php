@@ -14,18 +14,24 @@ class ArticleController extends BaseController
         return view('back.index');
     }
 
+    public function getLists()
+    {
+        $data = (new Articles)->findByConditionPage();
+        return returnJson($data);
+    }
+
     public function create(Request $request)
     {
         $input = $request->all();
         $rules = [
-            'title' => 'required|max:30',
-            'desc' => 'required',
-            'tag_id' => 'required|numeric',
-            'body' => 'string'
+            'title' => 'required|max:128',
+            'desc' => 'required|string',
+            'tag_id' => 'required|string',
+            'body' => 'required|string'
         ];
         $validator = $this->validatorRequest($input,$rules);
         if ($validator->fails()) {
-            return returnJson($validator->errors());
+            return returnJson($validator->errors(),403,'error');
         }
         if($res = (new Articles)->addData($input)){
             return returnJson('','','保存成功');

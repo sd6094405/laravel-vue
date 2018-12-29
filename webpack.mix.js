@@ -11,21 +11,42 @@ let mix = require('laravel-mix');
  |
  */
 mix.webpackConfig({
-    module:{
+    module: {
         // strictExportPresence:true,
 
-        rules:[{
-            test:/\.less$/,
-            loader:'less-loader',
-            options: {javascriptEnabled: true},
+        rules: [
+            {
+                test: /\.less$/,
+                loader: 'less-loader',
+                options: {javascriptEnabled: true},
 
-        }]
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    "presets": [
+                        ["es2015", {"modules": false}]
+                    ],
+                    "plugins": [["component", [
+                        {
+                            "libraryName": "element-ui",
+                            "styleLibraryName": "theme-chalk"
+                        }
+                    ]]]
+                }
+            },
+            {
+                test: /\.css$/,
+                loader: "style-loader!css-loader"
+            },
+        ]
     }
 });
-
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
 mix.js('resources/assets/js/admin.js', 'public/js');
 
-// mix.browserSync('hot-test.dev');
+mix.js('resources/assets/js/app.js', 'public/js')
+    .sass('resources/assets/sass/app.scss', 'public/css');
+
 

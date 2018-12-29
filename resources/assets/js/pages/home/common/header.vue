@@ -10,18 +10,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="https://moell.cn">hhb</a>
+                    <a class="navbar-brand" href="https://www.hehongbo.cn">hhb</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-left">
-                        <li><a href="http://www.moell.cn/category/1"><span>PHP</span></a></li>
-                        <li><a href="http://www.moell.cn/category/3"><span>DB</span></a></li>
-                        <li><a href="http://www.moell.cn/category/2"><span>Linux</span></a></li>
-                        <li><a href="http://www.moell.cn/category/4"><span>Code</span></a></li>
-                        <li><a href="http://www.moell.cn/article/1"><span>博客安装</span></a></li>
-                        <li><a href="http://www.moell.cn/about"><span>About</span></a></li>
+                        <li><router-link :to="{name:'category',params:{ tag_id:1 }}"><span>PHP</span></router-link></li>
+                        <li><router-link :to="{name:'category',params:{ tag_id:2 }}"><span>DB</span></router-link></li>
+                        <li><router-link :to="{name:'category',params:{ tag_id:3 }}"><span>Linux</span></router-link></li>
+                        <li><router-link :to="{name:'category',params:{ tag_id:4 }}"><span>Code</span></router-link></li>
+                        <li><router-link :to="{name:'category',params:{ tag_id:5 }}"><span>博客安装</span></router-link></li>
+                        <li><router-link :to="{name:'category',params:{ tag_id:6 }}"><span>About</span></router-link></li>
                     </ul>
-                    <form class="navbar-form navbar-right" action="https://moell.cn/search" method="get">
+                    <form class="navbar-form navbar-right" action="https://www.hehongbo.cn/search" method="get">
                         <div class="input-group input-group-sm">
                             <input type="search" class="search-field form-control" value="" name="keyword"
                                    placeholder="Search">
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-    import * as api from '../../config/httpService'
+    import * as api from '../../../config/httpService'
     export default {
         data(){
           return {
@@ -65,7 +65,7 @@
         },
         methods:{
           getSystem(){
-              api.postData('/api/setting')
+              api.postData(api.backUrl+'setting')
                   .then(res => function(){
                     if(res.data.code == 200){
                         this.systemData = res.data.data;
@@ -74,7 +74,7 @@
           }
         },
         mounted() {
-            this.getSystem();
+            // this.getSystem();
         }
     }
 </script>

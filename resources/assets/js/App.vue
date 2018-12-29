@@ -1,22 +1,9 @@
 <template>
-    <div>
-        <v-header></v-header>
         <router-view></router-view>
-    </div>
 </template>
-<script>
-    import header from './components/home/header';
 
-    export default {
-        data() {
-            return {}
-        },
-        components: {
-            'v-header': header,
-        },
-        computed: {},
-        methods: {},
-        mounted() {
-        },
+<style>
+    .demo-spin-icon-load{
+        animation: ani-demo-spin 1s linear infinite;
     }
-</script>
+</style>

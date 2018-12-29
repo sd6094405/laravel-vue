@@ -5,27 +5,43 @@ import beforeEach from './beforeEach'
 
 Vue.use(Router);
 
-const App = resolve => require(['../app'], resolve);
-const Index = resolve => require(['../pages/home/index'], resolve);
-const Article = resolve => require(['../pages/home/artilce'], resolve);
+const App = resolve => require(['../pages/home/common/Home'], resolve);
+const Article = resolve => require(['../pages/home/article/index'], resolve);
+const ArticleShow = resolve => require(['../pages/home/article/show'], resolve);
+const Category = resolve => require(['../pages/home/category/index'], resolve);
 
 const routes = [
     {
-        path: '/', name: 'App', component: App,redirect: { name: 'home' }
-        // children: [
-        //     {
-        //         // 当 /user/:id/profile 匹配成功，
-        //         // UserProfile 会被渲染在 User 的 <router-view> 中
-        //         path: '/index',
-        //         name:'index',
-        //         component: Index,
-        //         meta: {title: '首页'}
-        //     }
-        // ]
+        path: '/',
+        redirect: '/index'
     },
-    {path: '/index', name: 'home', component: Index, meta: {title: '首页'}},
+    {
+        path: '/',
+        name: 'App',
+        component: App,
+        meta: {title: '自述文件'},
+        children: [
+            {
+                path: '/index',
+                name: 'index',
+                component: Article,
+                meta: {title: '首页'}
+            },
+            {
+                path: '/article/:article_id',
+                name: 'articleShow',
+                component: ArticleShow,
+                meta: {title: '文章'}
+            },
+            {
+                path: '/category/:tag_id',
+                name: 'category',
+                component: Category,
+                meta: {title: '分类'}
+            },
+        ]
+    },
 
-    {path: '/article/:article_id', name: 'article', component: Article, meta: {title: '文章'}},
 ];
 
 const router = new Router({
