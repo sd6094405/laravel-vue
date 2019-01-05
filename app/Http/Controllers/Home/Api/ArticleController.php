@@ -20,7 +20,7 @@ class ArticleController extends BaseController
         $data = (new Articles)->findByConditionPage(
             null,
             null,
-            null,
+            [['created_at','desc']],
             $request->page,
             $request->pageSize,
             null,
@@ -59,8 +59,8 @@ class ArticleController extends BaseController
     public function show($id)
     {
         $data = (new Articles)->findByConditionOne(['id'=>$id])->toArray();
-//         $parsedown = new \Parsedown();
-//         $data['body'] = $parsedown->setMarkupEscaped(true)->text($data['body']);
+         $parsedown = new \Parsedown();
+         $data['body'] = $parsedown->setMarkupEscaped(true)->text($data['body']);
         return returnJson($data);
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-4">
+    <div class="col-md-4" style="margin-top: 15px">
         <div class="panel panel-default author">
             <div class="panel-heading">
                 <h3 class="panel-title">咸鱼王</h3>
@@ -33,9 +33,9 @@
 
             <!-- List group -->
             <ul class="list-group">
-                <li class="list-group-item">
+                <li class="list-group-item" style="">
                     <span class="badge">8330</span>
-                    <a href="https://moell.cn/article/1" target="_blank">
+                    <a href="https://hehongbo.cn/article/1" target="_blank">
                         Laravel-Vue-Blog 安装文档...
                     </a>
                 </li>
@@ -59,6 +59,11 @@
         </div>
     </div>
 </template>
-<script>
-
-</script>
+<style scoped>
+    .panel-default{
+        border-radius: 15px 15px 0 0;
+    }
+    .panel-default > .panel-heading {
+        border-radius: 15px 15px 0 0;
+    }
+</style>

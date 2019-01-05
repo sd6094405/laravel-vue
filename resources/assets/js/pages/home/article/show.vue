@@ -2,7 +2,7 @@
     <div class="col-md-8" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="加载中...">
         <div class="article-list">
             <div class="text-center">
-                <h3>{{datas.title}}</h3>
+                <h4>{{datas.title}}</h4>
                 <div>
                     <span class="icon-color">创建时间：{{ datas.created_at +''}} </span>
                     <span class="icon-color"> 访问：{{ datas.read }}</span>
@@ -10,17 +10,16 @@
                 <br>
                 <hr>
             </div>
-            <!--<div v-html="datas.body" class="markdown-body" >{{datas.body}}</div>-->
-            <vue-markdown v-highlight class="markdown-body"  :source="datas.body"></vue-markdown>
+
+            <div class="markdown-body" v-html="datas.body" v-highlight></div>
         </div>
     </div>
 </template>
 <script>
     import * as api from '../../../config/httpService'
-    import 'github-markdown-css'
-    import 'highlight.js'
-    import 'katex'
-    import VueMarkdown from 'vue-markdown'
+    // import 'github-markdown-css'
+    // import 'katex'
+    // import VueMarkdown from 'vue-markdown'
     export default {
         data() {
             return {
@@ -42,8 +41,8 @@
                     })
             }
         },
-        components:{
-            VueMarkdown
+        components: {
+            // VueMarkdown
         },
         mounted() {
             this.getArticle(this.$route.params)
@@ -51,7 +50,8 @@
     }
 </script>
 <style scoped>
-.icon-color {
-    color: #999;
-}
+
+    .icon-color {
+        color: #999;
+    }
 </style>

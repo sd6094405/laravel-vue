@@ -5,9 +5,9 @@
 const beforeEach = (to, from, next) => {
     const user = localStorage.getItem('user');
 
-    if(!user) {
-        return next({name: 'login'});
-    }
+    // if(!user) {
+    //     return next({name: 'login'});
+    // }
     next();
 };
 

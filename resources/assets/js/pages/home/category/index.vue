@@ -7,10 +7,6 @@
                     <router-link :to="{name:'articleShow',params:{ article_id:article.id }}">
                         {{article.title}}
                     </router-link>
-                    <!--<a  :href="'/article/'+article.id">-->
-                    <!--{{article.title}}-->
-                    <!--</a>-->
-
                 </h2>
                 <p class="desc">
                     {{article.desc}}

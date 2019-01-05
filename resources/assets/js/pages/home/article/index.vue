@@ -3,11 +3,11 @@
         <!--文章数据-->
         <ol class="article-list" v-for="article in articles">
             <li>
-                <h2 class="title">
+                <h4 class="title">
                     <router-link :to="{name:'articleShow',params:{ article_id:article.id }}">
                         {{article.title}}
                     </router-link>
-                </h2>
+                </h4>
                 <p class="desc">
                     {{article.desc}}
                 </p>

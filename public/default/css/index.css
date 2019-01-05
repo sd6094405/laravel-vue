@@ -62,9 +62,16 @@ body {
     padding: 10px;
     list-style: none;
     border: 1px solid #ddd;
-    border-radius: 0;
+    border-radius: 15px;
+    word-break: break-word;
+    line-height: 1.75;
+    font-weight: 400;
+    font-size: 15px;
+    overflow-x: hidden;
 }
-
+/*.article-list code {*/
+    /*overflow-x: auto;*/
+/*}*/
 .article-list li {
     padding-bottom: 10px;
 }
@@ -78,9 +85,10 @@ body {
     color: #333333;
 }
 
-.article-list .title {
-    font-size: 20px;
-}
+/*.article-list .title {*/
+    /*font-size: 20px;*/
+/*}*/
+
 
 .desc {
     font-size: 16px;
