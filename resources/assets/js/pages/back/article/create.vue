@@ -31,7 +31,7 @@
                     </el-form-item>
                 </el-form>
             </div>
-            <mavon-editor style="height:inherit" @imgAdd="$imgAdd" ishljs="true" :codeStyle="monokai-sublime" :ishljs="true" v-model="form.body"/>
+            <mavon-editor style="height:inherit" @imgAdd="$imgAdd" ishljs="true"  :ishljs="true" v-model="form.body"/>
             <div class="handle-box">
                 <el-button type="primary" @click="saveVisible = true">保存</el-button>
             </div>
@@ -52,7 +52,7 @@
 
 <script>
     import * as api from '../../../config/httpService'
-
+    import * as cosService from '../../../api/api'
 
 
     export default {
@@ -97,7 +97,6 @@
                 this.saveVisible = false;
                 //需要数据验证
                 this.loading = true;
-                console.log(this.form)
                 api.postJson(api.backUrl+'article/create', this.form)
                     .then(res => {
                         this.loading = false;
@@ -112,24 +111,31 @@
 
             // 绑定@imgAdd event
             $imgAdd(pos, $file){
-                // 第一步.将图片上传到服务器.
-                var formdata = new FormData();
-                formdata.append('image', $file);
-                console.log($file,pos);
-                axios({
-                    url: 'server url',
-                    method: 'post',
-                    data: formdata,
-                    headers: { 'Content-Type': 'multipart/form-data' },
-                }).then((url) => {
-                    // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
-                    /**
-                     * $vm 指为mavonEditor实例，可以通过如下两种方式获取
-                     * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
-                     * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
-                     */
-                    $vm.$img2Url(pos, url);
-                })
+                console.log(pos,$file)
+                // var formdata = new FormData();
+                // formdata.append('image', $file);
+                var signUrl = '';
+                // cosService.getSign()
+                //     .then(res => {
+                //         signUrl = res.data.data;
+                //         console.log($file.name);
+                        // cosService.putObject(signUrl,$file)
+                        //     .then(res=>{
+                        //         console.log(res.request.responseURL);
+                        //     })
+                    // });
+
+
+                // api.postFormData(api.backUrl+'article/',formdata)
+                //     .then(url => {
+                        // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+                        /**
+                         * $vm 指为mavonEditor实例，可以通过如下两种方式获取
+                         * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
+                         * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
+                         */
+                        // $vm.$img2Url(pos, url);
+                    // })
             }
 
         }

@@ -19,6 +19,6 @@ Route::group(['namespace'=>'Back','prefix'=>'back'],function(){
 Route::group(['namespace' => 'Home\Api'], function () {
     Route::resource('/article', 'ArticleController',['only' => ['index', 'show']]);
     Route::post('/setting','IndexController@setting');
-
+    Route::post('/sign','TenCentCosController@sign');
 });
 

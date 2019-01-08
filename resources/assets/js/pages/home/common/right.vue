@@ -6,7 +6,7 @@
             </div>
             <div class="panel-body">
                 <div class="row text-center">
-                    <img src="/profile_photo.jpg"
+                    <img src="https://blog-1257809211.cos.ap-chengdu.myqcloud.com/imgs/profile_photo.jpg"
                          class="img-circle author-avatar" alt="User Image">
                 </div>
                 <div class="row text-center author-footer">

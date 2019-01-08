@@ -62,3 +62,49 @@ export const postData = (url,data={}) =>{
         },reject)
     })
 }
+
+/* ajax-post */
+export const postFormData = (url,data={}) =>{
+    return new Promise((resolve,reject)=>{
+        axios({
+            method:'post',
+            url:url,
+            headers:{
+                'Content-type': 'multipart/form-data'
+            },
+            data:data,
+            transformRequest: [function (data) {
+                let ret = ''
+                for (let it in data) {
+                    ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                }
+                return ret
+            }]
+        }).then(resp=>{
+            resolve(resp)
+        },reject)
+    })
+}
+
+/* ajax-put */
+export const putFormData = (url,data={}) =>{
+    return new Promise((resolve,reject)=>{
+        axios({
+            method:'put',
+            url:url,
+            headers:{
+                'Content-type': 'multipart/form-data'
+            },
+            data:data,
+            transformRequest: [function (data) {
+                let ret = ''
+                for (let it in data) {
+                    ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                }
+                return ret
+            }]
+        }).then(resp=>{
+            resolve(resp)
+        },reject)
+    })
+}

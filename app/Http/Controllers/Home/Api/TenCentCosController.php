@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Home\Api;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Services\CosClientService;
 use App\Models\Systems;
+use Illuminate\Http\Request;
 
-class IndexController extends BaseController
+class TenCentCosController extends BaseController
 {
     public function index()
     {
@@ -18,4 +20,8 @@ class IndexController extends BaseController
         return returnJson($data);
     }
 
+    public function Sign(CosClientService $clientService)
+    {
+        return returnJson($clientService->sign());
+    }
 }
