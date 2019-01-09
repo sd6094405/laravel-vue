@@ -29,15 +29,21 @@ class CosClientService
         ]);
     }
 
-    public function sign()
+    public function sign($fileName)
     {
         $command = $this->client->getCommand('putObject', [
             'Bucket' => config('cos.cos_bucket'),
-            'Key' => config('cos.cos_secretKey'),
+            'Key' => $fileName,
             'Body' => ''
         ]);
         $signedUrl = $command->createPresignedUrl('+10 minutes');
         return $signedUrl;
 //        return dd($this->client->listObjects(['Bucket'=>config('cos.cos_bucket')]));
+    }
+
+    public function test()
+    {
+        $bucket = config('cos.cos_bucket');
+
     }
 }

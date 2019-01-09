@@ -20,5 +20,6 @@ Route::group(['namespace' => 'Home\Api'], function () {
     Route::resource('/article', 'ArticleController',['only' => ['index', 'show']]);
     Route::post('/setting','IndexController@setting');
     Route::post('/sign','TenCentCosController@sign');
+    Route::put('/test','TenCentCosController@test');
 });
 

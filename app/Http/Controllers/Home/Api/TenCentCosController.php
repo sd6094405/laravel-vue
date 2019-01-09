@@ -16,12 +16,20 @@ class TenCentCosController extends BaseController
 
     public function setting()
     {
-        $data = (new Systems)->findByConditionOne([],'',[['id','desc']]);
+        $data = (new Systems)->findByConditionOne([], '', [['id', 'desc']]);
         return returnJson($data);
     }
 
-    public function Sign(CosClientService $clientService)
+    public function Sign(
+        CosClientService $clientService,
+        Request $request
+    )
     {
-        return returnJson($clientService->sign());
+        return returnJson($clientService->sign($request->input('name')));
+    }
+
+    public function test(Request $request)
+    {
+
     }
 }

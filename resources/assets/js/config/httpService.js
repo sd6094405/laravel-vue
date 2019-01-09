@@ -95,14 +95,14 @@ export const putFormData = (url,data={}) =>{
             headers:{
                 'Content-type': 'multipart/form-data'
             },
-            data:data,
-            transformRequest: [function (data) {
-                let ret = ''
-                for (let it in data) {
-                    ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-                }
-                return ret
-            }]
+            data:data
+            // transformRequest: [function (data) {
+            //     let ret = ''
+            //     for (let it in data) {
+            //         ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+            //     }
+            //     return ret
+            // }]
         }).then(resp=>{
             resolve(resp)
         },reject)

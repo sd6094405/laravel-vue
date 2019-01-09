@@ -31,7 +31,8 @@
                     </el-form-item>
                 </el-form>
             </div>
-            <mavon-editor style="height:inherit" @imgAdd="$imgAdd" ishljs="true"  :ishljs="true" v-model="form.body"/>
+            <mavon-editor style="height:inherit" ref=md @imgAdd="$imgAdd" ishljs="true" :ishljs="true"
+                          v-model="form.body"/>
             <div class="handle-box">
                 <el-button type="primary" @click="saveVisible = true">保存</el-button>
             </div>
@@ -53,14 +54,14 @@
 <script>
     import * as api from '../../../config/httpService'
     import * as cosService from '../../../api/api'
-
+    import * as util from '../../../utils/util'
 
     export default {
         data() {
             return {
                 loading: false,
                 saveVisible: false,
-                tag_ids:[],
+                tag_ids: [],
                 tags: [
                     {
                         'id': '1',
@@ -85,11 +86,11 @@
             tagChange() {
                 var tag_ids = this.tag_ids;
                 var tag_id = '';
-                tag_ids.forEach(function(c){
-                    tag_id = tag_id+c+',';
+                tag_ids.forEach(function (c) {
+                    tag_id = tag_id + c + ',';
 
                 });
-                tag_id = tag_id.substring(0,tag_id.length-1);
+                tag_id = tag_id.substring(0, tag_id.length - 1);
                 this.form.tag_id = tag_id;
             },
             // 保存
@@ -97,10 +98,9 @@
                 this.saveVisible = false;
                 //需要数据验证
                 this.loading = true;
-                api.postJson(api.backUrl+'article/create', this.form)
+                api.postJson(api.backUrl + 'article/create', this.form)
                     .then(res => {
                         this.loading = false;
-                        console.log(res)
                         if (res.data.status == 'success') {
                             this.$message.success('保存成功！');
                             return this.$router.push('/back/article')
@@ -110,32 +110,27 @@
             },
 
             // 绑定@imgAdd event
-            $imgAdd(pos, $file){
-                console.log(pos,$file)
-                // var formdata = new FormData();
-                // formdata.append('image', $file);
-                var signUrl = '';
-                // cosService.getSign()
-                //     .then(res => {
-                //         signUrl = res.data.data;
-                //         console.log($file.name);
-                        // cosService.putObject(signUrl,$file)
-                        //     .then(res=>{
-                        //         console.log(res.request.responseURL);
-                        //     })
-                    // });
+            $imgAdd(pos, $file) {
 
-
-                // api.postFormData(api.backUrl+'article/',formdata)
-                //     .then(url => {
-                        // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
-                        /**
-                         * $vm 指为mavonEditor实例，可以通过如下两种方式获取
-                         * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
-                         * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
-                         */
-                        // $vm.$img2Url(pos, url);
-                    // })
+                var file = $file.name.split('.');
+                var NewName = util.make_rand(36);
+                var params = {
+                    "signUrl": "",
+                    "file": file,
+                    "fileName": 'imgs/' + NewName + '.' + file[1]
+                };
+                var $vm = this;
+                cosService.getSign({"name": params.fileName})
+                    .then(res => {
+                        params.signUrl = res.data.data;
+                        cosService.putObject(params.signUrl, util.dataURLtoFile($file.miniurl))
+                            .then(res => {
+                                if (res.statusText = 'OK') {
+                                    console.log(res)
+                                    $vm.$refs.md.$img2Url(pos, 'http://blog-1257809211.cos.ap-chengdu.myqcloud.com/'+ params.fileName);
+                                }
+                            })
+                    });
             }
 
         }
