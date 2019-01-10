@@ -40,6 +40,22 @@ export const postJson = (url,data={}) =>{
     })
 }
 
+/* json-delete */
+export const deleteJson = (url,data={}) =>{
+    return new Promise((resolve,reject)=>{
+        axios({
+            method:'delete',
+            url:url,
+            data:data,
+            headers:{
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+        }).then(resp=>{
+            resolve(resp)
+        },reject)
+    })
+}
+
 /* ajax-post */
 export const postData = (url,data={}) =>{
     return new Promise((resolve,reject)=>{

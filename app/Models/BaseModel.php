@@ -25,9 +25,9 @@ class BaseModel extends Model
 
     /***********  删除数据  *************/
 
-    public function deleteData()
+    public function deleteData($id)
     {
-
+        return $this->query()->where([['id',$id]])->delete();
     }
 
     /***********  修改数据  *************/

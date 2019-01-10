@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\BaseController;
 use App\Models\Articles;
 use App\Models\Systems;
+use App\Models\Tags;
 use Illuminate\Http\Request;
 
-class ArticleController extends BaseController
+class TagController extends BaseController
 {
     public function view()
     {
@@ -22,7 +23,7 @@ class ArticleController extends BaseController
         ]);
         $where = [];
         $keyword = isset($input['keyword']) ? [['id', '=', $input['keyword']], ['title', 'like', '%' . $input['keyword'] . '%']] : '';
-        $pageData = (new Articles)->findByConditionPage(
+        $pageData = (new Tags)->findByConditionPage(
             $where,
             '',
             [['created_at', 'desc']],
@@ -42,7 +43,7 @@ class ArticleController extends BaseController
             'tag_id' => 'required|string',
             'body' => 'required|string'
         ]);
-        if ($res = (new Articles)->addData($input)) {
+        if ($res = (new Tags)->addData($input)) {
             return returnJson('', '', '保存成功');
         }
         return returnJson($res, '500', '保存失败');
@@ -52,7 +53,7 @@ class ArticleController extends BaseController
     {
         if (is_numeric($id)) {
 
-            if ($res = (new Articles)->deleteData($id)) {
+            if ($res = (new Tags)->deleteData($id)) {
                 return returnJson('', '200', '删除成功');
             }
             return returnJson($res, '500', '删除失败');

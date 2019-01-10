@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class IndexController extends BaseController
 {
-    public function index()
+    public function view()
     {
         return view('back.index');
     }

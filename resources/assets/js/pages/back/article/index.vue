@@ -25,11 +25,11 @@
                 </el-table-column>
                 <el-table-column prop="updated_at" label="更新日期" width="120">
                 </el-table-column>
-                <el-table-column label="操作" width="180" align="center">
+                <el-table-column label="操作" width="200" align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑
+                        <el-button  icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑
                         </el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red"
+                        <el-button type="danger" icon="el-icon-delete"
                                    @click="handleDelete(scope.$index, scope.row)">删除
                         </el-button>
                     </template>
@@ -64,8 +64,9 @@
                 is_search: false,
                 editVisible: false,
                 delVisible: false,
-                total:1,
-                keyword:'',
+                total: 1,
+                keyword: '',
+                deleteId: '',
             }
         },
         created() {
@@ -76,30 +77,39 @@
         computed: {},
         methods: {
             search() {
-                this.getArticles(1,this.keyword)
+                this.getArticles(1, this.keyword)
             },
-            refresh(){
+            refresh() {
                 this.keyword = '';
                 this.getArticles();
             },
-            getArticles(page = 1,keyword = '') {
-                api.fetch(api.backUrl + 'article?page='+page+'&keyword='+keyword)
+            getArticles(page = 1, keyword = '') {
+                api.fetch(api.backUrl + 'article?page=' + page + '&keyword=' + keyword)
                     .then(res => {
                         this.total = res.data.data.total;
                         this.articles = res.data.data.lists;
                     })
             },
-            handleCurrentChange(index){
+            handleCurrentChange(index) {
                 this.getArticles(index)
             },
             handleEdit(index, row) {
 
             },
             handleDelete(index, row) {
-
+                this.delVisible = true;
+                this.deleteId = row.id;
             },
             deleteRow() {
-
+                this.delVisible = false;
+                api.deleteJson(api.backUrl + 'article/' + this.deleteId)
+                    .then(res => {
+                        if (res.data.status == 'success') {
+                            this.$message.success('删除成功！');
+                            return this.getArticles()
+                        }
+                        this.$message.error('删除失败!');
+                    })
             }
 
         }

@@ -13,13 +13,13 @@
 
 
 Route::group(['namespace' => 'Home'], function () {
-    Route::get('/', 'IndexController@index');
-    Route::get('/index', 'IndexController@index');
+    Route::get('/', 'IndexController@view');
+    Route::get('/index', 'IndexController@view');
     Route::resource('/article', 'ArticleController', ['only' => ['index', 'show']]);
 
 });
 
-    Route::group(['namespace' => 'Back', 'prefix' => 'back'], function () {
-        Route::get('/', 'IndexController@index');
-    Route::match(['post', 'get'], '{all}', 'IndexController@index')->where(['all' => '.*']);
+Route::group(['namespace' => 'Back', 'prefix' => 'back'], function () {
+    Route::get('/', 'IndexController@view');
+    Route::match(['post', 'get'], '{all}', 'IndexController@view')->where(['all' => '.*']);
 });

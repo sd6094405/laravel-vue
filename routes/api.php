@@ -12,14 +12,15 @@
 */
 
 Route::group(['namespace'=>'Back','prefix'=>'back'],function(){
-    Route::get('/article','ArticleController@getLists');
-    Route::post('/article/create','ArticleController@create');
+    Route::resource('/article', 'ArticleController',['only' => ['index', 'show','destroy']]);
+    Route::resource('/tag', 'TagController',['only' => ['index', 'show','destroy']]);
+
 });
 
 Route::group(['namespace' => 'Home\Api'], function () {
     Route::resource('/article', 'ArticleController',['only' => ['index', 'show']]);
+    Route::delete('/article','ArticleController@delete');
     Route::post('/setting','IndexController@setting');
     Route::post('/sign','TenCentCosController@sign');
-    Route::put('/test','TenCentCosController@test');
 });
 
