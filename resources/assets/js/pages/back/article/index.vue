@@ -7,8 +7,9 @@
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
+                <el-input v-model="keyword" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
+                <el-button type="primary" icon="search" @click="refresh">重置</el-button>
             </div>
             <el-table :data="articles" border class="table" ref="multipleTable">
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
@@ -36,7 +37,7 @@
             </el-table>
             <div class="pagination">
                 <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next"
-                               :total="1000">
+                               :total="total">
                 </el-pagination>
             </div>
         </div>
@@ -58,12 +59,13 @@
     export default {
         data() {
             return {
-                articles: '',
+                articles: [],
                 cur_page: 1,
                 is_search: false,
                 editVisible: false,
                 delVisible: false,
-
+                total:1,
+                keyword:'',
             }
         },
         created() {
@@ -74,17 +76,21 @@
         computed: {},
         methods: {
             search() {
-
+                this.getArticles(1,this.keyword)
             },
-            getArticles() {
-                api.fetch(api.backUrl + 'article')
+            refresh(){
+                this.keyword = '';
+                this.getArticles();
+            },
+            getArticles(page = 1,keyword = '') {
+                api.fetch(api.backUrl + 'article?page='+page+'&keyword='+keyword)
                     .then(res => {
+                        this.total = res.data.data.total;
                         this.articles = res.data.data.lists;
-
                     })
             },
-            handleCurrentChange() {
-
+            handleCurrentChange(index){
+                this.getArticles(index)
             },
             handleEdit(index, row) {
 

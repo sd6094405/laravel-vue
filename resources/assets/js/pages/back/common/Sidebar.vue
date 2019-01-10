@@ -40,7 +40,7 @@
                 items: [
                     {
                         icon: 'el-icon-lx-home',
-                        index: 'dashboard',
+                        index: '/back/dashboard',
                         title: '系统首页'
                     },
                     {
@@ -49,15 +49,15 @@
                         title: '文章管理',
                         subs: [
                             {
-                                index: 'article',
+                                index: '/back/article',
                                 title: '文章列表'
                             },
                             {
-                                index: 'article/create',
+                                index: '/back/article/create',
                                 title: '新文章'
                             },
                             {
-                                index: 'article/tags',
+                                index: '/back/article/tags',
                                 title: '标签管理'
                             },
                         ]
@@ -68,7 +68,7 @@
                         title: '系统设置',
                         subs: [
                             {
-                                index: 'setting/links',
+                                index: '/back/setting/links',
                                 title: '友链管理'
                             },
                         ]

@@ -133,22 +133,22 @@ class BaseModel extends Model
      * @param array $sortArray //排序规则  [['id','desc']]
      * @param int $start 分页
      * @param int $limit 分页
-     * @param null $keyword 模糊搜索
+     * @param null $keywords 模糊搜索
      * @param null $selectColumn
      * @return array
      */
     public function findByConditionPage(
         $condition = null,
-        $with = null,
+        $with = '',
         $sortArray = [],
         $start = null,
         $limit = null,
-        $keyword = null,
+        $keywords = null,
         $selectColumn = null
     )
     {
         $limit = $limit ?? 10;
-        $start = getOffset($start ?? 1, $limit);
+        $start = $start = getOffset($start ?? 1, $limit);
         $query = $this->query();
         if ($selectColumn) {
             $query->select($selectColumn);
@@ -159,24 +159,30 @@ class BaseModel extends Model
                 $query->with($one);
             }
         }
-        if (!is_null($keyword)) {
-            $query->where(function ($query) use ($keyword) {
-                $query->where('id', '=', $keyword)->orWhere('name', 'like', '%' . $keyword . '%');
+        if (!empty($keywords)) {
+            $query->where(function ($query) use ($keywords) {
+                foreach ($keywords as $Key => $keyword) {
+                    if ($Key == 0) {
+                        $query->where([$keyword]);
+                    } else {
+                        $query->orWhere([$keyword]);
+                    }
+                }
             });
         }
         if ($condition) {
             $query->where($condition);
         }
+        $count = $query->count('id');
         $query->limit($limit)->skip($start);
         if (!empty($sortArray)) {
             foreach ($sortArray as $sort) {
                 $query->orderBy($sort[0], $sort[1]);
             }
         }
-
         return [
-            'total'=>$this->query()->count(),
-            'lists'=>$query->get()
+            'total' => $count,
+            'lists' => $query->get()
         ];
     }
 

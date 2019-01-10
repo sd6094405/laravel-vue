@@ -16,23 +16,32 @@ class ArticleController extends BaseController
 
     public function getLists()
     {
-        $data = (new Articles)->findByConditionPage();
-        return returnJson($data);
+        $input = $this->validatorRequest([
+            'page' => 'numeric',
+            'pageSize' => 'numeric'
+        ]);
+        $where = [];
+        $keyword = isset($input['keyword']) ? [['id', '=', $input['keyword']], ['title', 'like', '%' . $input['keyword'] . '%']] : '';
+        $pageData = (new Articles)->findByConditionPage(
+            $where,
+            '',
+            [['created_at','desc']],
+            $input['page'] ?? 1,
+            $input['pageSize'] ?? 10,
+            $keyword,
+            ''
+        );
+        return returnJson($pageData);
     }
 
     public function create(Request $request)
     {
-        $input = $request->all();
-        $rules = [
+        $input = $this->validatorRequest([
             'title' => 'required|max:128',
             'desc' => 'required|string',
             'tag_id' => 'required|string',
             'body' => 'required|string'
-        ];
-        $validator = $this->validatorRequest($input,$rules);
-        if ($validator->fails()) {
-            return returnJson($validator->errors(),403,'error');
-        }
+        ]);
         if($res = (new Articles)->addData($input)){
             return returnJson('','','保存成功');
         }

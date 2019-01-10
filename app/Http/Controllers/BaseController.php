@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -12,6 +13,12 @@ class BaseController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
     public function validateMessage()
     {
         return [
@@ -20,17 +27,24 @@ class BaseController extends Controller
             'max' => ' :attribute 超长',
             'min' => ' :attribute 长度不够',
             'numeric' => ' :attribute 必须是数字',
-            'date' => ' :attribute 必须是 年月日时分秒'
+            'date' => ' :attribute 必须是 年月日时分秒',
+            'digits_between' => ':attribute 长度必须介于 :min - :max 位之间',
+            'digits' => ':attribute 长度错误'
         ];
     }
 
     /**
-     * @param array $data
      * @param array $rules
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param array|null $data
+     * @return array
      */
-    public function validatorRequest(Array $data, Array $rules)
+    public function validatorRequest(Array $rules, Array $data = null)
     {
-        return Validator::make($data, $rules, $this->validateMessage());
+        $request = $this->request->all();
+        $validator = Validator::make($data ?? $request, $rules, $this->validateMessage());
+        if ($validator->fails()) {
+            returnJson($validator->errors()->first(), '403','error')->throwResponse();
+        }
+        return $request;
     }
 }
