@@ -12,9 +12,8 @@
 */
 
 Route::group(['namespace'=>'Back','prefix'=>'back'],function(){
-    Route::resource('/article', 'ArticleController',['only' => ['index', 'show','destroy']]);
-    Route::resource('/tag', 'TagController',['only' => ['index', 'show','destroy']]);
-
+    Route::resource('/article', 'ArticleController',['only' => ['index', 'show','destroy','update','store']]);
+    Route::resource('/tag', 'TagController',['only' => ['index', 'show','destroy','update','store']]);
 });
 
 Route::group(['namespace' => 'Home\Api'], function () {

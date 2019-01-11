@@ -23,15 +23,14 @@
                         <el-select @change="tagChange()" v-model="tag_ids" multiple placeholder="请选择">
                             <el-option
                                     v-for="item in tags"
-                                    :key="item.value"
-                                    :label="item.name"
+                                    :label="item.title"
                                     :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
                 </el-form>
             </div>
-            <mavon-editor style="height:inherit" ref=md @imgAdd="$imgAdd" ishljs="true" :ishljs="true"
+            <mavon-editor style="height:inherit;width: auto;" ref=md @imgAdd="$imgAdd" :ishljs="true"
                           v-model="form.body"/>
             <div class="handle-box">
                 <el-button type="primary" @click="saveVisible = true">保存</el-button>
@@ -62,18 +61,7 @@
                 loading: false,
                 saveVisible: false,
                 tag_ids: [],
-                tags: [
-                    {
-                        'id': '1',
-                        'name': 'php',
-                        'value': '1'
-                    },
-                    {
-                        'id': '2',
-                        'name': 'JavaScript',
-                        'value': '2'
-                    },
-                ],
+                tags: [],
                 form: {
                     title: '',
                     desc: '',
@@ -81,6 +69,9 @@
                     body: ''
                 },
             }
+        },
+        created(){
+          this.getTags();
         },
         methods: {
             tagChange() {
@@ -93,12 +84,18 @@
                 tag_id = tag_id.substring(0, tag_id.length - 1);
                 this.form.tag_id = tag_id;
             },
+            getTags() {
+                api.fetch(api.backUrl + 'tag?all=1')
+                    .then(res => {
+                        this.tags = res.data.data.lists;
+                    })
+            },
             // 保存
             save() {
                 this.saveVisible = false;
                 //需要数据验证
                 this.loading = true;
-                api.postJson(api.backUrl + 'article/create', this.form)
+                api.postJson(api.backUrl + 'article', this.form)
                     .then(res => {
                         this.loading = false;
                         if (res.data.status == 'success') {

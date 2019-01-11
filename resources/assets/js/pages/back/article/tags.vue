@@ -10,6 +10,7 @@
                 <el-input v-model="keyword" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
                 <el-button type="primary" icon="search" @click="refresh">重置</el-button>
+                <el-button type="primary" icon="search" @click="addVisible = true">添加标签</el-button>
             </div>
             <el-table v-loading="loading" element-loading-text="加载中..." :data="tags" border class="table"
                       ref="multipleTable">
@@ -36,9 +37,11 @@
                 </el-table-column>
                 <el-table-column label="操作" width="200" align="center">
                     <template slot-scope="scope">
-                        <el-button type="success" v-if="scope.row.status !== 1" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">启用
+                        <el-button type="success" v-if="scope.row.status !== 1" icon="el-icon-edit"
+                                   @click="editStatus(scope.row.id,1)">启用
                         </el-button>
-                        <el-button type="danger" v-else icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">禁用
+                        <el-button type="danger" v-else icon="el-icon-edit"
+                                   @click="editStatus(scope.row.id,0)">禁用
                         </el-button>
                         <el-dropdown @command="handleCommand($event,scope.row)">
                             <el-button type="primary">
@@ -75,7 +78,6 @@
                     <el-input v-model="editData.title"></el-input>
                 </el-form-item>
                 <el-form-item label="首页显示">
-                    <el-tooltip placement="top">
                         <el-switch
                                 style="display: block"
                                 v-model="editData.is_home"
@@ -84,10 +86,8 @@
                                 active-text="开启"
                                 inactive-text="关闭">
                         </el-switch>
-                    </el-tooltip>
                 </el-form-item>
                 <el-form-item label="状态">
-                    <el-tooltip placement="top">
                         <el-switch
                                 style="display: block"
                                 v-model="editData.status"
@@ -96,12 +96,44 @@
                                 active-text="启用"
                                 inactive-text="禁用">
                         </el-switch>
-                    </el-tooltip>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="editVisible = false">取 消</el-button>
-                <el-button type="primary" @click="deleteRow">确 定</el-button>
+                <el-button type="primary" @click="updateRow">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <!-- 新增框 -->
+        <el-dialog title="编辑" :visible.sync="addVisible" width="300px" center>
+            <el-form ref="form" :model="addData" label-width="80px">
+                <el-form-item label="标签名">
+                    <el-input v-model="addData.title"></el-input>
+                </el-form-item>
+                <el-form-item label="首页显示">
+                    <el-switch
+                            style="display: block"
+                            v-model="addData.is_home"
+                            active-color="#13ce66"
+                            inactive-color="#DCDFE6"
+                            active-text="开启"
+                            inactive-text="关闭">
+                    </el-switch>
+                </el-form-item>
+                <el-form-item label="状态">
+                    <el-switch
+                            style="display: block"
+                            v-model="addData.status"
+                            active-color="#13ce66"
+                            inactive-color="#DCDFE6"
+                            active-text="启用"
+                            inactive-text="禁用">
+                    </el-switch>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="addVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addRow">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -119,6 +151,7 @@
                 is_search: false,
                 editVisible: false,
                 delVisible: false,
+                addVisible:false,
                 total: 1,
                 keyword: '',
                 deleteId: '',
@@ -128,6 +161,11 @@
                     "is_home": "",
                     "status": ""
                 },
+                addData:{
+                    "title": "",
+                    "is_home": false,
+                    "status": true
+                }
             }
         },
         created() {
@@ -145,6 +183,7 @@
                 this.getArticles();
             },
             getArticles(page = 1, keyword = '') {
+                this.loading = true;
                 api.fetch(api.backUrl + 'tag?page=' + page + '&keyword=' + keyword)
                     .then(res => {
                         this.total = res.data.data.total;
@@ -166,19 +205,34 @@
                 this.getArticles(index)
             },
             handleEdit(row) {
-                console.log(row, 1)
                 this.editData = {
                     "id": row.id,
                     "title": row.title,
                     "is_home": row.is_home == 1 ? true : false,
                     "status": row.status == 1 ? true : false
                 };
-                console.log(this.editData)
                 this.editVisible = true;
             },
             handleDelete(row) {
                 this.delVisible = true;
                 this.deleteId = row.id;
+            },
+            addRow(){
+                this.addVisible = false;
+                var data = {
+                    "title":this.addData.title,
+                    "is_home":this.addData.is_home === false ? 0 : 1,
+                    "status": this.addData.status === false ? 0 :1
+                };
+                api.postJson(api.backUrl + 'tag/',data)
+                    .then(res => {
+                        if (res.data.status == 'success') {
+                            this.$message.success('添加成功！');
+                            return this.getArticles()
+                        }
+                        this.$message.error('添加失败!');
+                    })
+
             },
             deleteRow() {
                 this.delVisible = false;
@@ -189,6 +243,34 @@
                             return this.getArticles()
                         }
                         this.$message.error('删除失败!');
+                    })
+            },
+            editStatus(id,status){
+                api.putData(api.backUrl + 'tag/' + id,{"status":status})
+                    .then(res => {
+                        if (res.data.status == 'success') {
+                            this.$message.success('修改成功！');
+                            return this.getArticles()
+                        }
+                        this.$message.error(res.data.data);
+                    })
+            },
+            updateRow() {
+                this.editVisible = false;
+                var data = this.editData;
+                this.editData = {
+                    "id": data.id,
+                    "title": data.title,
+                    "is_home": data.is_home === false ? 0 : 1,
+                    "status": data.status === false ? 0 : 1
+                };
+                api.putData(api.backUrl + 'tag/' + this.editData.id,this.editData)
+                    .then(res => {
+                        if (res.data.status == 'success') {
+                            this.$message.success('修改成功！');
+                            return this.getArticles()
+                        }
+                        this.$message.error(res.data.data);
                     })
             }
 

@@ -34,6 +34,20 @@ class ArticleController extends BaseController
         return returnJson($pageData);
     }
 
+    public function update(Request $request, $id)
+    {
+        $input = $this->validatorRequest([
+            'title' => 'required|max:128',
+            'desc' => 'required|string',
+            'tag_id' => 'required|string',
+            'body' => 'required|string'
+        ]);
+        if ($res = (new Articles)->updateData($input, $id)) {
+            return returnJson('', '', '修改成功');
+        }
+        return returnJson($res, '500', '修改失败');
+    }
+
     public function store(Request $request)
     {
         $input = $this->validatorRequest([

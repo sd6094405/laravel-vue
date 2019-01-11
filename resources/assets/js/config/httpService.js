@@ -24,6 +24,27 @@ export const fetch = (url,data={}) =>{
     })
 };
 
+/* ajax-put */
+export const putData = (url,data={}) =>{
+    return new Promise((resolve,reject) => {
+
+        axios({
+            method:'put',
+            url:url,
+            params:data,
+            headers:{
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+        }).then(resp=>{
+            resolve(resp);
+
+        }).catch(err=>{
+            reject(err);
+
+        })
+    })
+};
+
 /* json-post */
 export const postJson = (url,data={}) =>{
     return new Promise((resolve,reject)=>{

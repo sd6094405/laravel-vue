@@ -22,6 +22,9 @@ class TagController extends BaseController
             'pageSize' => 'numeric'
         ]);
         $where = [];
+        if(isset($input['all'])){
+            returnJson((new Tags)->findByConditionAll());
+        }
         $keyword = isset($input['keyword']) ? [['id', '=', $input['keyword']], ['title', 'like', '%' . $input['keyword'] . '%']] : '';
         $pageData = (new Tags)->findByConditionPage(
             $where,
@@ -35,13 +38,25 @@ class TagController extends BaseController
         return returnJson($pageData);
     }
 
+    public function update(Request $request, $id)
+    {
+        $input = $this->validatorRequest([
+            'title' => 'string',
+            'is_home' => 'numeric',
+            'status' => 'required|numeric',
+        ]);
+        if ($res = (new Tags)->updateData($input,$id)) {
+            return returnJson('', '', '修改成功');
+        }
+        return returnJson($res, '500', '修改失败');
+    }
+
     public function store(Request $request)
     {
         $input = $this->validatorRequest([
-            'title' => 'required|max:128',
-            'desc' => 'required|string',
-            'tag_id' => 'required|string',
-            'body' => 'required|string'
+            'title' => 'required|string',
+            'is_home' => 'required|numeric',
+            'status' => 'required|numeric',
         ]);
         if ($res = (new Tags)->addData($input)) {
             return returnJson('', '', '保存成功');
