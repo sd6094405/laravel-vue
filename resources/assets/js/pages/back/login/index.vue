@@ -4,12 +4,12 @@
             <div class="ms-title">后台管理系统</div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
                 <el-form-item prop="username">
-                    <el-input v-model="ruleForm.username" placeholder="username">
+                    <el-input v-model="ruleForm.email" placeholder="账号">
                         <el-button slot="prepend" icon="el-icon-lx-people"></el-button>
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input type="password" placeholder="password" v-model="ruleForm.password"
+                    <el-input type="password" placeholder="密码" v-model="ruleForm.password"
                               @keyup.enter.native="submitForm('ruleForm')">
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
@@ -24,15 +24,18 @@
 </template>
 
 <script>
+    import * as util from '../../../utils/util'
+    import {postJson, backUrl} from '../../../config/httpService'
+
     export default {
         data: function () {
             return {
                 ruleForm: {
-                    username: 'admin',
-                    password: '123123'
+                    email: '',
+                    password: ''
                 },
                 rules: {
-                    username: [
+                    email: [
                         {required: true, message: '请输入用户名', trigger: 'blur'}
                     ],
                     password: [
@@ -45,10 +48,24 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        localStorage.setItem('ms_username', this.ruleForm.username);
-                        this.$router.push('/');
+                        //加密密码
+                        this.ruleForm.password = util.encrypt(this.ruleForm.password);
+                        postJson(backUrl + 'login', this.ruleForm)
+                            .then(res => {
+                                if (res.status == 'error') {
+                                    this.ruleForm.password = '';
+                                } else {
+                                    localStorage.setItem('token', res.data.token);
+                                    this.$message.success('登陆成功');
+                                    this.$router.push({name:'dashboard'});
+                                }
+                            })
+                            .catch(error => {
+                                this.ruleForm.password = '';
+                            });
+
+
                     } else {
-                        console.log('error submit!!');
                         return false;
                     }
                 });
@@ -58,11 +75,11 @@
 </script>
 <style scoped>
     .login-wrap {
-        position: relative;
+        position: absolute;
         width: 100%;
         height: 100%;
         background-image: url(../../../assets/login-bg.jpg);
-        background-size: 100%;
+        background-size: 100% 100%;
     }
 
     .ms-title {

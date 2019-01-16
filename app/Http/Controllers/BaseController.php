@@ -22,6 +22,7 @@ class BaseController extends Controller
     public function validateMessage()
     {
         return [
+            'email' =>  '需要是 :attribute 类型',
             'required' => '缺少 :attribute 字段',
             'unique' => '当前 :attribute 数据已存在',
             'max' => ' :attribute 超长',

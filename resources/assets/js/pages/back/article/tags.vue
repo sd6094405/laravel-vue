@@ -186,8 +186,8 @@
                 this.loading = true;
                 api.fetch(api.backUrl + 'tag?page=' + page + '&keyword=' + keyword)
                     .then(res => {
-                        this.total = res.data.data.total;
-                        this.tags = res.data.data.lists;
+                        this.total = res.data.total;
+                        this.tags = res.data.lists;
                         this.loading = false;
                     })
             },
@@ -226,7 +226,7 @@
                 };
                 api.postJson(api.backUrl + 'tag/',data)
                     .then(res => {
-                        if (res.data.status == 'success') {
+                        if (res.status === 'success') {
                             this.$message.success('添加成功！');
                             return this.getArticles()
                         }
@@ -238,7 +238,7 @@
                 this.delVisible = false;
                 api.deleteJson(api.backUrl + 'tag/' + this.deleteId)
                     .then(res => {
-                        if (res.data.status == 'success') {
+                        if (res.status === 'success') {
                             this.$message.success('删除成功！');
                             return this.getArticles()
                         }
@@ -248,7 +248,7 @@
             editStatus(id,status){
                 api.putData(api.backUrl + 'tag/' + id,{"status":status})
                     .then(res => {
-                        if (res.data.status == 'success') {
+                        if (res.status === 'success') {
                             this.$message.success('修改成功！');
                             return this.getArticles()
                         }
@@ -266,7 +266,7 @@
                 };
                 api.putData(api.backUrl + 'tag/' + this.editData.id,this.editData)
                     .then(res => {
-                        if (res.data.status == 'success') {
+                        if (res.status === 'success') {
                             this.$message.success('修改成功！');
                             return this.getArticles()
                         }

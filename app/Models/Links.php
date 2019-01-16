@@ -5,5 +5,9 @@ namespace App\Models;
 class Links extends BaseModel
 {
     protected $table = 'links';
-    protected $fillable = [];
+    protected $fillable = [
+        'title',
+        'url',
+        'weight'
+    ];
 }

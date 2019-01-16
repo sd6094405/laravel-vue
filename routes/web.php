@@ -16,6 +16,7 @@ Route::group(['namespace' => 'Home'], function () {
     Route::get('/', 'IndexController@view');
     Route::get('/index', 'IndexController@view');
     Route::resource('/article', 'ArticleController', ['only' => ['index', 'show']]);
+    Route::match(['post', 'get'],'/category/{id}', 'ArticleController@category');
 
 });
 

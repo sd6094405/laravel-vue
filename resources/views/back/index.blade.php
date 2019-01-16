@@ -18,7 +18,6 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Bootstrap  -->
-    {{--<link rel="stylesheet" href="{{ asset('default/css/bootstrap.min.css') }}">--}}
 
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_830376_qzecyukz0s.css">
 
@@ -29,8 +28,5 @@
 
 <script src="{{mix('js/admin.js')}}"></script>
 
-{{--<script src="{{asset('default/js/jQuery-2.2.0.min.js')}}"></script>--}}
-<!-- Bootstrap -->
-{{--<script src="{{asset('default/js/bootstrap.min.js')}}"></script>--}}
 </body>
 </html>

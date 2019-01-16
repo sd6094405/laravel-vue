@@ -55,7 +55,7 @@
         },
         methods: {
             getArticleLists() {
-                this.fullscreenLoading = true;
+                this.loading = true;
                 let parmas = {
                     page: this.form.page,
                     pageSize: this.form.pageSize
@@ -66,9 +66,9 @@
                 }
                 api.fetch(api.baseUrl + 'article', parmas)
                     .then(res => {
-                        if (res.data.code === 200) {
-                            this.articles = res.data.data.lists;
-                            this.total = res.data.data.total;
+                        if (res.code === 200) {
+                            this.articles = res.data.lists;
+                            this.total = res.data.total;
                         }
                         this.loading = false;
                     })

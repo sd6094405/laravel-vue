@@ -2,38 +2,49 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 文章管理</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 友链管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-                <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
+                <el-input v-model="keyword" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
+                <el-button type="primary" icon="search" @click="refresh">重置</el-button>
+                <el-button type="success" icon="search" @click="addVisible = true">添加友链</el-button>
+
             </div>
-            <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
+            <el-table v-loading="loading" element-loading-text="加载中..." :data="links" border class="table"
+                      ref="multipleTable">
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
-                <el-table-column prop="date" label="id" sortable width="80">
+                <el-table-column prop="id" label="id" sortable width="80">
                 </el-table-column>
-                <el-table-column prop="name" label="标题">
+                <el-table-column prop="title" label="标题" width="160">
                 </el-table-column>
-                <el-table-column prop="address" label="分类" width="140">
-                </el-table-column>
-                <el-table-column prop="name" label="阅读数" width="80">
-                </el-table-column>
-                <el-table-column prop="name" label="创建日期" width="120">
-                </el-table-column>
-                <el-table-column prop="name" label="更新日期" width="120">
-                </el-table-column>
-                <el-table-column label="操作" width="180" align="center">
+                <el-table-column prop="url" label="url地址">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <a :href="scope.row.url"
+                           target="_blank">{{scope.row.url}}</a>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="weight" label="排序权重" width="160">
+                </el-table-column>
+                <el-table-column prop="created_at" label="创建日期" width="120">
+                </el-table-column>
+                <el-table-column prop="updated_at" label="更新日期" width="120">
+                </el-table-column>
+                <el-table-column label="操作" width="200" align="center">
+                    <template slot-scope="scope">
+                        <el-button icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑
+                        </el-button>
+                        <el-button type="danger" icon="el-icon-delete"
+                                   @click="handleDelete(scope.$index, scope.row)">删除
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <div class="pagination">
-                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">
+                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next"
+                               :total="total">
                 </el-pagination>
             </div>
         </div>
@@ -46,131 +57,149 @@
                 <el-button type="primary" @click="deleteRow">确 定</el-button>
             </span>
         </el-dialog>
+
+
+        <el-dialog title="编辑友链" width="70%" :visible.sync="editVisible">
+            <el-form>
+                <div class="form-box">
+                    <el-form ref="form" :model="Data" label-width="100px">
+                        <el-form-item label="标题：">
+                            <el-input v-model="Data.title"></el-input>
+                        </el-form-item>
+                        <el-form-item label="URL地址：">
+                            <el-input v-model="Data.url"></el-input>
+                        </el-form-item>
+                        <el-form-item label="排序权重：">
+                            <el-input v-model="Data.weight"></el-input>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="editVisible = false">取 消</el-button>
+                <el-button type="primary" @click="editRow">确 定</el-button>
+            </div>
+        </el-dialog>
+        <!-- 新增框 -->
+        <el-dialog title="新增友链" :visible.sync="addVisible" width="500px" center>
+            <el-form ref="form" :model="Data" label-width="80px">
+                <el-form-item label="友链名">
+                    <el-input v-model="Data.title"></el-input>
+                </el-form-item>
+                <el-form-item label="URL地址：">
+                    <el-input v-model="Data.url"></el-input>
+                </el-form-item>
+                <el-form-item label="排序权重：">
+                    <el-input v-model="Data.weight"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="addVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addRow">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
 <script>
     import * as api from '../../../config/httpService'
+    import * as cosService from '../../../api/api'
+    import * as util from '../../../utils/util'
     export default {
-        name: 'basetable',
         data() {
             return {
-                articles:'',
-                url: './static/vuetable.json',
-                tableData: [],
+                loading: true,
+                links: [],
                 cur_page: 1,
-                multipleSelection: [],
-                select_cate: '',
-                select_word: '',
-                del_list: [],
                 is_search: false,
                 editVisible: false,
                 delVisible: false,
-                form: {
-                    name: '',
-                    date: '',
-                    address: ''
+                addVisible:false,
+                total: 1,
+                keyword: '',
+                deleteId: '',
+                Data:{
+                    "id":"",
+                    "title":"",
+                    "url":"",
+                    "weight":""
                 },
-                idx: -1
             }
         },
         created() {
-            this.getData();
+            this.getLinks();
         },
-        computed: {
-            data() {
-                return this.tableData.filter((d) => {
-                    let is_del = false;
-                    for (let i = 0; i < this.del_list.length; i++) {
-                        if (d.name === this.del_list[i].name) {
-                            is_del = true;
-                            break;
-                        }
-                    }
-                    if (!is_del) {
-                        if (d.address.indexOf(this.select_cate) > -1 &&
-                            (d.name.indexOf(this.select_word) > -1 ||
-                                d.address.indexOf(this.select_word) > -1)
-                        ) {
-                            return d;
-                        }
-                    }
-                })
-            }
+        mounted() {
+
         },
+        computed: {},
         methods: {
-            getArticles(){
-                api.fetch('/api/articles')
-                    .then(res=>{
-                        this.articles = res.data;
-                        console.log(this.articles)
+            search() {
+                this.getLinks(1, this.keyword)
+            },
+            refresh() {
+                this.keyword = '';
+                this.getLinks();
+            },
+            getLinks(page = 1, keyword = '') {
+                this.loading = true;
+                api.fetch(api.backUrl + 'setting/links?page=' + page + '&keyword=' + keyword)
+                    .then(res => {
+                        this.total = res.data.data.total;
+                        this.links = res.data.data.lists;
+                        this.loading = false;
                     })
             },
-            // 分页导航
-            handleCurrentChange(val) {
-                this.cur_page = val;
-                this.getData();
+            handleCurrentChange(index) {
+                this.getLinks(index)
             },
-            // 获取 easy-mock 的模拟数据
-            getData() {
-                // 开发环境使用 easy-mock 数据，正式环境使用 json 文件
-                if (process.env.NODE_ENV === 'development') {
-                    this.url = '/ms/table/list';
+            handleEdit(index,row) {
+                this.Data ={
+                    "id":row.id,
+                    "title":row.title,
+                    "url":row.url,
+                    "weight":row.weight
                 };
-                this.$axios.post(this.url, {
-                    page: this.cur_page
-                }).then((res) => {
-                    this.tableData = res.data.list;
-                })
-            },
-            search() {
-                this.is_search = true;
-            },
-            formatter(row, column) {
-                return row.address;
-            },
-            filterTag(value, row) {
-                return row.tag === value;
-            },
-            handleEdit(index, row) {
-                this.idx = index;
-                const item = this.tableData[index];
-                this.form = {
-                    name: item.name,
-                    date: item.date,
-                    address: item.address
-                }
                 this.editVisible = true;
             },
             handleDelete(index, row) {
-                this.idx = index;
                 this.delVisible = true;
+                this.deleteId = row.id;
             },
-            delAll() {
-                const length = this.multipleSelection.length;
-                let str = '';
-                this.del_list = this.del_list.concat(this.multipleSelection);
-                for (let i = 0; i < length; i++) {
-                    str += this.multipleSelection[i].name + ' ';
-                }
-                this.$message.error('删除了' + str);
-                this.multipleSelection = [];
-            },
-            handleSelectionChange(val) {
-                this.multipleSelection = val;
-            },
-            // 保存编辑
-            saveEdit() {
-                this.$set(this.tableData, this.idx, this.form);
+            editRow(){
                 this.editVisible = false;
-                this.$message.success(`修改第 ${this.idx+1} 行成功`);
+                api.putData(api.backUrl + 'setting/links/'+this.Data.id,this.Data)
+                    .then(res => {
+                        if (res.data.status == 'success') {
+                            this.$message.success('编辑成功！');
+                            return this.getLinks()
+                        }
+                        this.$message.error('编辑失败!');
+                    })
             },
-            // 确定删除
-            deleteRow(){
-                this.tableData.splice(this.idx, 1);
-                this.$message.success('删除成功');
+            deleteRow() {
                 this.delVisible = false;
-            }
+                api.deleteJson(api.backUrl + 'setting/links/' + this.deleteId)
+                    .then(res => {
+                        if (res.data.status == 'success') {
+                            this.$message.success('删除成功！');
+                            return this.getLinks()
+                        }
+                        this.$message.error('删除失败!');
+                    })
+            },
+            addRow(){
+                this.addVisible = false;
+                api.postJson(api.backUrl + 'setting/links',this.Data)
+                    .then(res => {
+                        if (res.data.status == 'success') {
+                            this.$message.success('添加成功！');
+                            return this.getLinks()
+                        }
+                        this.$message.error('添加失败!');
+                    })
+
+            },
         }
     }
 
@@ -189,15 +218,18 @@
         width: 300px;
         display: inline-block;
     }
-    .del-dialog-cnt{
+
+    .del-dialog-cnt {
         font-size: 16px;
         text-align: center
     }
-    .table{
+
+    .table {
         width: 100%;
         font-size: 14px;
     }
-    .red{
+
+    .red {
         color: #ff0000;
     }
 </style>

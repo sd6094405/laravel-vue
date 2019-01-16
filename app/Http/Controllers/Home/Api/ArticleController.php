@@ -47,7 +47,7 @@ class ArticleController extends BaseController
      */
     public function store(Request $request)
     {
-        return '321123';
+
     }
 
     /**
@@ -96,5 +96,24 @@ class ArticleController extends BaseController
     public function destroy($id)
     {
         //
+    }
+
+    public function category($id)
+    {
+        if(empty($id) || !is_numeric($id)){
+            return false;
+        }
+        $where = [];
+        $keyword = [['tag_id','like','%'.$id.'%']];
+        $pageData = (new Articles)->findByConditionPage(
+            $where,
+            '',
+            [['created_at', 'desc']],
+            $input['page'] ?? 1,
+            $input['pageSize'] ?? 10,
+            $keyword,
+            ''
+        );
+        return returnJson($pageData);
     }
 }

@@ -22,9 +22,10 @@
                     <el-form-item label="标签：">
                         <el-select @change="tagChange()" v-model="tag_ids" multiple placeholder="请选择">
                             <el-option
-                                    v-for="item in tags"
-                                    :label="item.title"
-                                    :value="item.id">
+                                    v-for="(tag,index) in tags"
+                                    :key="index"
+                                    :label="tag.title"
+                                    :value="tag.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -87,7 +88,7 @@
             getTags() {
                 api.fetch(api.backUrl + 'tag?all=1')
                     .then(res => {
-                        this.tags = res.data.data.lists;
+                        this.tags = res.data.lists;
                     })
             },
             // 保存
@@ -98,7 +99,7 @@
                 api.postJson(api.backUrl + 'article', this.form)
                     .then(res => {
                         this.loading = false;
-                        if (res.data.status == 'success') {
+                        if (res.status == 'success') {
                             this.$message.success('保存成功！');
                             return this.$router.push('/back/article')
                         }
@@ -119,11 +120,10 @@
                 var $vm = this;
                 cosService.getSign({"name": params.fileName})
                     .then(res => {
-                        params.signUrl = res.data.data;
+                        params.signUrl = res.data;
                         cosService.putObject(params.signUrl, util.dataURLtoFile($file.miniurl))
                             .then(res => {
                                 if (res.statusText = 'OK') {
-                                    console.log(res)
                                     $vm.$refs.md.$img2Url(pos, 'http://blog-1257809211.cos.ap-chengdu.myqcloud.com/'+ params.fileName);
                                 }
                             })

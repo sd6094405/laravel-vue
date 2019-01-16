@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Home\Api;
+namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Services\CosClientService;

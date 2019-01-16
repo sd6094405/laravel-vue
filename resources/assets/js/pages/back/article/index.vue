@@ -77,9 +77,10 @@
                         <el-form-item label="标签：">
                             <el-select @change="tagChange()" v-model="tag_ids" multiple placeholder="请选择">
                                 <el-option
-                                        v-for="item in tags"
-                                        :label="item.title"
-                                        :value="item.id">
+                                        v-for="(tag,index) in tags"
+                                        :key="index"
+                                        :label="tag.title"
+                                        :value="tag.id">
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -152,7 +153,7 @@
             getTags() {
                 api.fetch(api.backUrl + 'tag?all=1')
                     .then(res => {
-                        this.tags = res.data.data.lists;
+                        this.tags = res.data.lists;
                     })
             },
             showTag(row) {
@@ -168,8 +169,8 @@
                 this.loading = true;
                 api.fetch(api.backUrl + 'article?page=' + page + '&keyword=' + keyword)
                     .then(res => {
-                        this.total = res.data.data.total;
-                        this.articles = res.data.data.lists;
+                        this.total = res.data.total;
+                        this.articles = res.data.lists;
                         this.loading = false;
                     })
             },
@@ -196,9 +197,9 @@
             },
             editRow(){
               this.editVisible = false;
-              api.putData(api.backUrl + 'article/'+this.editData.id,this.editData)
+              api.putData(api.backUrl + 'article/'+this.editData.id ,this.editData)
                   .then(res => {
-                      if (res.data.status == 'success') {
+                      if (res.status == 'success') {
                           this.$message.success('编辑成功！');
                           return this.getArticles()
                       }
@@ -209,7 +210,7 @@
                 this.delVisible = false;
                 api.deleteJson(api.backUrl + 'article/' + this.deleteId)
                     .then(res => {
-                        if (res.data.status == 'success') {
+                        if (res.status == 'success') {
                             this.$message.success('删除成功！');
                             return this.getArticles()
                         }
@@ -229,11 +230,10 @@
                 var $vm = this;
                 cosService.getSign({"name": params.fileName})
                     .then(res => {
-                        params.signUrl = res.data.data;
+                        params.signUrl = res.data;
                         cosService.putObject(params.signUrl, util.dataURLtoFile($file.miniurl))
                             .then(res => {
                                 if (res.statusText = 'OK') {
-                                    console.log(res)
                                     $vm.$refs.md.$img2Url(pos, 'http://blog-1257809211.cos.ap-chengdu.myqcloud.com/'+ params.fileName);
                                 }
                             })

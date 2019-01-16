@@ -17,7 +17,7 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'password' => 'eyJpdiI6Ik1ERXdNakF6TURRd05UQTJNRGN3T0E9PSIsInZhbHVlIjoiV2dtdWlWZVpSYmVyZ0tuY0NQWnZxZz09In0=', // secret
         'remember_token' => str_random(10),
     ];
 });

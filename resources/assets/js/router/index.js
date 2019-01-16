@@ -51,6 +51,5 @@ const router = new Router({
     mode: 'history'
     // mode: 'hash'
 });
-router.beforeEach(beforeEach);
 
 export default router

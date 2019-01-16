@@ -33,8 +33,8 @@
                 var id = articleId.article_id;
                 api.fetch('/api/article/' + id)
                     .then(res => {
-                        if (res.data.status == 'success') {
-                            this.datas = res.data.data;
+                        if (res.status == 'success') {
+                            this.datas = res.data;
                             this.fullscreenLoading = false;
 
                         }

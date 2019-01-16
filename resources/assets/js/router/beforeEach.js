@@ -1,14 +1,16 @@
-// import vuex from 'vuex'
-
-// const needAuth = route => route.meta.auth === true;
-
 const beforeEach = (to, from, next) => {
-    const user = localStorage.getItem('user');
-
-    // if(!user) {
-    //     return next({name: 'login'});
-    // }
-    next();
+    let token = localStorage.getItem('token');
+    let urlName = to.name;
+    if(urlName == 'login'){
+        next();
+    }else{
+        // sessionStorage.setItem('urlName',urlName);
+        if(!token){
+            next({name:"login"})
+        }else{
+            next();
+        }
+    }
 };
 
 export default beforeEach
