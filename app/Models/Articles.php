@@ -10,6 +10,7 @@ class Articles extends BaseModel
     protected $fillable = [
         'title',
         'desc',
+        'is_home',
         'tag_id',
         'body',
         'read'

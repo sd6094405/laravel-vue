@@ -19,6 +19,16 @@
                                   placeholder="请输入内容"
                                   v-model="form.desc"></el-input>
                     </el-form-item>
+                    <el-form-item label="首页展示：">
+                        <el-switch
+                                style="display: block"
+                                v-model="form.is_home"
+                                active-color="#13ce66"
+                                inactive-color="#DCDFE6"
+                                active-text="开启"
+                                inactive-text="关闭">
+                        </el-switch>
+                    </el-form-item>
                     <el-form-item label="标签：">
                         <el-select @change="tagChange()" v-model="tag_ids" multiple placeholder="请选择">
                             <el-option
@@ -66,6 +76,7 @@
                 form: {
                     title: '',
                     desc: '',
+                    is_home:true,
                     tag_id: '',
                     body: ''
                 },
@@ -94,6 +105,7 @@
             // 保存
             save() {
                 this.saveVisible = false;
+                this.form.is_home = this.form.is_home === true ? 1 :0 ;
                 //需要数据验证
                 this.loading = true;
                 api.postJson(api.backUrl + 'article', this.form)
@@ -124,7 +136,7 @@
                         cosService.putObject(params.signUrl, util.dataURLtoFile($file.miniurl))
                             .then(res => {
                                 if (res.statusText = 'OK') {
-                                    $vm.$refs.md.$img2Url(pos, 'http://blog-1257809211.cos.ap-chengdu.myqcloud.com/'+ params.fileName);
+                                    $vm.$refs.md.$img2Url(pos, api.cosBucket+ params.fileName);
                                 }
                             })
                     });

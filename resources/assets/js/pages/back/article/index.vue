@@ -27,6 +27,13 @@
                         </span>
                     </template>
                 </el-table-column>
+                <el-table-column label="首页展示" width="100">
+                    <template slot-scope="scope">
+                            <el-tag :type="scope.row.is_home == 1 ? 'success' : 'info'" >
+                                {{ scope.row.is_home == 1 ? '是' : '否'}}
+                            </el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="read" label="阅读数" width="80">
                 </el-table-column>
                 <el-table-column prop="created_at" label="创建日期" width="120">
@@ -74,6 +81,17 @@
                                       placeholder="请输入内容"
                                       v-model="editData.desc"></el-input>
                         </el-form-item>
+
+                        <el-form-item label="首页展示：">
+                            <el-switch
+                                    style="display: block"
+                                    v-model="editData.is_home"
+                                    active-color="#13ce66"
+                                    inactive-color="#DCDFE6"
+                                    active-text="开启"
+                                    inactive-text="关闭">
+                            </el-switch>
+                        </el-form-item>
                         <el-form-item label="标签：">
                             <el-select @change="tagChange()" v-model="tag_ids" multiple placeholder="请选择">
                                 <el-option
@@ -119,6 +137,7 @@
                     "id":"",
                     "title":"",
                     "desc":"",
+                    "is_home":"",
                     "tag_id":"",
                     "body":"",
                 }
@@ -182,6 +201,7 @@
                     "id":row.id,
                     "title":row.title,
                     "desc":row.desc,
+                    "is_home":row.is_home == 1 ? true : false,
                     "tag_id":row.tag_id,
                     "body":row.body,
                 };
@@ -197,6 +217,7 @@
             },
             editRow(){
               this.editVisible = false;
+              this.editData.is_home = this.editData.is_home === false ? 0 : 1;
               api.putData(api.backUrl + 'article/'+this.editData.id ,this.editData)
                   .then(res => {
                       if (res.status == 'success') {
@@ -234,7 +255,7 @@
                         cosService.putObject(params.signUrl, util.dataURLtoFile($file.miniurl))
                             .then(res => {
                                 if (res.statusText = 'OK') {
-                                    $vm.$refs.md.$img2Url(pos, 'http://blog-1257809211.cos.ap-chengdu.myqcloud.com/'+ params.fileName);
+                                    $vm.$refs.md.$img2Url(pos, api.cosBucket+ params.fileName);
                                 }
                             })
                     });

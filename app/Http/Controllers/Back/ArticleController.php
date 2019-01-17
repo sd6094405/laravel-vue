@@ -39,6 +39,7 @@ class ArticleController extends BaseController
         $input = $this->validatorRequest([
             'title' => 'required|max:128',
             'desc' => 'required|string',
+            'is_home' => 'required|numeric',
             'tag_id' => 'required|string',
             'body' => 'required|string'
         ]);
@@ -53,6 +54,7 @@ class ArticleController extends BaseController
         $input = $this->validatorRequest([
             'title' => 'required|max:128',
             'desc' => 'required|string',
+            'is_home' => 'required|numeric',
             'tag_id' => 'required|string',
             'body' => 'required|string'
         ]);

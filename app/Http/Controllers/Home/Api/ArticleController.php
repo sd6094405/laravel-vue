@@ -18,7 +18,7 @@ class ArticleController extends BaseController
     {
 
         $data = (new Articles)->findByConditionPage(
-            null,
+            [['is_home',1]],
             null,
             [['created_at','desc']],
             $request->page,

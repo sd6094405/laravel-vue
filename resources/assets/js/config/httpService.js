@@ -1,6 +1,7 @@
 import axios from 'axios';
 export const backUrl = '/api/back/';
 export const baseUrl = '/api/';
+export const cosBucket = 'http://blog-1257809211.cos.ap-chengdu.myqcloud.com/';
 import {message} from 'element-ui'
 import router from '../router/admin'
 

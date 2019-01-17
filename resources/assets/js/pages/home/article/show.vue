@@ -17,6 +17,7 @@
 </template>
 <script>
     import * as api from '../../../config/httpService'
+    // import marked from 'marked'
     // import 'github-markdown-css'
     // import 'katex'
     // import VueMarkdown from 'vue-markdown'
