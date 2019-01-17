@@ -11,13 +11,13 @@
                 <hr>
             </div>
 
-            <div class="markdown-body" v-html="datas.body" v-highlight></div>
+            <div id="markdown-main" class="markdown-body" v-html="datas.body" v-highlight></div>
         </div>
     </div>
 </template>
 <script>
     import * as api from '../../../config/httpService'
-    // import marked from 'marked'
+    import marked from 'marked'
     // import 'github-markdown-css'
     // import 'katex'
     // import VueMarkdown from 'vue-markdown'
@@ -25,6 +25,7 @@
         data() {
             return {
                 datas: '',
+                content: '',
                 fullscreenLoading: true
             }
         },
@@ -35,6 +36,7 @@
                 api.fetch('/api/article/' + id)
                     .then(res => {
                         if (res.status == 'success') {
+                            res.data.body = marked(res.data.body);
                             this.datas = res.data;
                             this.fullscreenLoading = false;
 
@@ -46,11 +48,30 @@
             // VueMarkdown
         },
         mounted() {
-            this.getArticle(this.$route.params)
+            this.getArticle(this.$route.params);
+            this.$nextTick(() => {
+                $(this.$el).on('click', "img", (res) => {
+                    var strA = "<a id='yourid' href='" + this.src + "'></a>";
+                    console.log(res.currentTarget = '')
+                })
+            })
         }
     }
 </script>
-<style scoped>
+<style>
+    .markdown-body > p > img {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    img.active {
+        width: 100%; /*图片需要放大3倍*/
+        top:0;
+        left:0;
+        position: absolute; /*是相对于前面的容器定位的，此处要放大的图片，不能使用position：relative；以及float，否则会导致z-index无效*/
+        z-index: 100;
+        transition: all ease 1s;
+    }
 
     .icon-color {
         color: #999;
