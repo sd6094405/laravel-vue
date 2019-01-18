@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="col-md-8" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="加载中...">
+        <div class="col-md-8" v-loading="loading" element-loading-text="加载中...">
             <div class="article-list">
                 <div class="text-center">
                     <h4>{{datas.title}}</h4>
@@ -38,7 +38,7 @@
             return {
                 datas: '',
                 content: '',
-                fullscreenLoading: true,
+                loading: true,
                 imgSrc: '',
                 isChoose: false,
             }
@@ -49,14 +49,14 @@
                 this.imgSrc = '';
             },
             getArticle(articleId) {
-                this.fullscreenLoading = true;
+                this.loading = true;
                 var id = articleId.article_id;
                 api.fetch('/api/article/' + id)
                     .then(res => {
                         if (res.status == 'success') {
                             res.data.body = marked(res.data.body);
                             this.datas = res.data;
-                            this.fullscreenLoading = false;
+                            this.loading = false;
 
                         }
                     })
