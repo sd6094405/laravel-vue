@@ -21,8 +21,10 @@
                 <h3 class="panel-title">标签</h3>
             </div>
             <div class="panel-body">
-                    <span style="padding: 5px;">
-                        <a href="https://moell.cn/tag/5" target="_blank">apache</a>
+
+                    <span style="padding: 5px;" v-for="tag in tags">
+                        <router-link :to="{name:'category',params:{ tag_id:tag.id }}"><span>{{tag.title}}</span>
+                </router-link>
                     </span>
             </div>
         </div>
@@ -60,10 +62,35 @@
     </div>
 </template>
 <style scoped>
-    .panel-default{
+    .panel-default {
         border-radius: 15px 15px 0 0;
     }
+
     .panel-default > .panel-heading {
         border-radius: 15px 15px 0 0;
     }
 </style>
+<script>
+    import {postData, baseUrl} from '../../../config/httpService'
+
+    export default {
+        data() {
+            return {
+                tags: [],
+            }
+        },
+        methods: {
+            getTags() {
+                postData(baseUrl + 'tags')
+                    .then(res => {
+                        if (res.status !== 'error') {
+                            this.tags = res.data;
+                        }
+                    });
+            }
+        },
+        created() {
+            this.getTags();
+        }
+    }
+</script>
