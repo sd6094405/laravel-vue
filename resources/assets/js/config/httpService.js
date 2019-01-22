@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 export const backUrl = '/api/back/';
 export const baseUrl = '/api/';
 export const cosBucket = 'http://blog-1257809211.cos.ap-chengdu.myqcloud.com/';
@@ -15,16 +16,20 @@ axios.interceptors.response.use((response) => {
         case '401':
             localStorage.removeItem('token ');
             message.error(data.data);
-            router.push({name:'login'});
+            router.push({name: 'login'});
+            return response;
             break;
         case '403':
             message.error(data.data);
+            return response;
             break;
         case '404':
             message.error(data.data);
+            return response;
             break;
         case '500':
             message.error(data.data);
+            return response;
             break;
         default:
             return response;
@@ -51,7 +56,7 @@ axios.interceptors.response.use((response) => {
                 break
 
             case 404:
-                message.error('请求地址出错'+ `${err.response.config.url}`);
+                message.error('请求地址出错' + `${err.response.config.url}`);
                 // err.message = `请求地址出错: ${err.response.config.url}`
                 break
 
@@ -91,18 +96,18 @@ axios.interceptors.response.use((response) => {
 })
 
 /* ajax-get */
-export const fetch = (url,data={}) =>{
-    return new Promise((resolve,reject) => {
+export const fetch = (url, data = {}) => {
+    return new Promise((resolve, reject) => {
 
         axios({
-            method:'get',
-            url:url,
-            params:data,
-            headers:{
-                'api-token':localStorage.getItem('token'),
+            method: 'get',
+            url: url,
+            params: data,
+            headers: {
+                'api-token': localStorage.getItem('token'),
                 'X-Requested-With': 'XMLHttpRequest'
             },
-        }).then(resp=>{
+        }).then(resp => {
             resolve(resp);
 
         })
@@ -110,68 +115,71 @@ export const fetch = (url,data={}) =>{
 };
 
 /* ajax-put */
-export const putData = (url,data={}) =>{
-    return new Promise((resolve,reject) => {
+export const putData = (url, data = {}) => {
+    return new Promise((resolve, reject) => {
 
         axios({
-            method:'PUT',
-            url:url,
-            data:data,
-            headers:{
+            method: 'PUT',
+            url: url,
+            data: data,
+            headers: {
                 'X-Requested-With': 'XMLHttpRequest',
-                'api-token':localStorage.getItem('token')
+                'api-token': localStorage.getItem('token')
             },
-        }).then(resp=>{
+        }).then(resp => {
             resolve(resp);
-        },reject)
+        }, reject)
     })
 };
 
 /* json-post */
-export const postJson = (url,data={}) =>{
-    return new Promise((resolve,reject)=>{
+export const postJson = (url, data = {}) => {
+    return new Promise((resolve, reject) => {
         axios({
-            method:'post',
-            url:url,
-            data:data,
-            headers:{
-                'api-token':localStorage.getItem('token'),
+            method: 'post',
+            url: url,
+            data: data,
+            headers: {
+                'api-token': localStorage.getItem('token'),
                 'X-Requested-With': 'XMLHttpRequest'
             },
-        }).then(resp=>{
+        }).then(resp => {
             resolve(resp)
-        },reject)
+        }, reject)
+            .catch(err => {
+                resolve(err)
+            }, reject)
     })
 }
 
 /* json-delete */
-export const deleteJson = (url,data={}) =>{
-    return new Promise((resolve,reject)=>{
+export const deleteJson = (url, data = {}) => {
+    return new Promise((resolve, reject) => {
         axios({
-            method:'delete',
-            url:url,
-            data:data,
-            headers:{
-                'api-token':localStorage.getItem('token'),
+            method: 'delete',
+            url: url,
+            data: data,
+            headers: {
+                'api-token': localStorage.getItem('token'),
                 'X-Requested-With': 'XMLHttpRequest'
             },
-        }).then(resp=>{
+        }).then(resp => {
             resolve(resp)
-        },reject)
+        }, reject)
     })
 }
 
 /* ajax-post */
-export const postData = (url,data={}) =>{
-    return new Promise((resolve,reject)=>{
+export const postData = (url, data = {}) => {
+    return new Promise((resolve, reject) => {
         axios({
-            method:'post',
-            url:url,
-            headers:{
-                'api-token':localStorage.getItem('token'),
+            method: 'post',
+            url: url,
+            headers: {
+                'api-token': localStorage.getItem('token'),
                 'Content-type': 'application/x-www-form-urlencoded'
             },
-            data:data,
+            data: data,
             transformRequest: [function (data) {
                 let ret = ''
                 for (let it in data) {
@@ -179,23 +187,23 @@ export const postData = (url,data={}) =>{
                 }
                 return ret
             }]
-        }).then(resp=>{
+        }).then(resp => {
             resolve(resp)
-        },reject)
+        }, reject)
     })
 }
 
 /* ajax-post */
-export const postFormData = (url,data={}) =>{
-    return new Promise((resolve,reject)=>{
+export const postFormData = (url, data = {}) => {
+    return new Promise((resolve, reject) => {
         axios({
-            method:'post',
-            url:url,
-            headers:{
-                'api-token':localStorage.getItem('token'),
+            method: 'post',
+            url: url,
+            headers: {
+                'api-token': localStorage.getItem('token'),
                 'Content-type': 'multipart/form-data'
             },
-            data:data,
+            data: data,
             transformRequest: [function (data) {
                 let ret = ''
                 for (let it in data) {
@@ -203,21 +211,21 @@ export const postFormData = (url,data={}) =>{
                 }
                 return ret
             }]
-        }).then(resp=>{
+        }).then(resp => {
             resolve(resp)
-        },reject)
+        }, reject)
 
     })
 }
 
 /* ajax-put */
-export const putFormData = (url,data={}) =>{
-    return new Promise((resolve,reject)=>{
+export const putFormData = (url, data = {}) => {
+    return new Promise((resolve, reject) => {
         axios({
-            method:'PUT',
-            data:data,
-            url:url,
-            headers:{
+            method: 'PUT',
+            data: data,
+            url: url,
+            headers: {
                 'Content-type': 'multipart/form-data'
             },
             // transformRequest: [function (data) {
@@ -227,8 +235,8 @@ export const putFormData = (url,data={}) =>{
             //     }
             //     return ret
             // }]
-        }).then(resp=>{
+        }).then(resp => {
             resolve(resp)
-        },reject)
+        }, reject)
     })
 }

@@ -115,8 +115,12 @@
                             this.$message.success('保存成功！');
                             return this.$router.push('/back/article')
                         }
-                        this.$message.error('保存失败!');
-                    });
+                        this.$message.error(res.data.data);
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+
             },
 
             // 绑定@imgAdd event
