@@ -11,7 +11,7 @@
                 </div>
                 <div class="row text-center author-footer">
                                         <span class="icon-github" style="padding-left:20px;">
-                    <a href="https://github.com/moell-peng" target="_blank">GitHub</a>
+                    <a href="https://github.com/sd6094405/laravel-vue" target="_blank">GitHub</a>
                 </span>
                 </div>
             </div>

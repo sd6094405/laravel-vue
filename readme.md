@@ -7,6 +7,11 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+## 关于项目前端页面
+前台前端模板修改使用自 https://github.com/moell-peng
+
+后端管理前端模板修改使用自 https://github.com/lin-xin/vue-manage-system
+
 ## 项目环境
 基于Laravel 5.6 版本开发 
 
@@ -26,6 +31,7 @@
  - 1.npm install Or yarn install
  - 2.npm run watch-poll Or yarn run watch-poll
  
+ *如果执行打包时出现 报错，请多打包1-2次*
 ## Nginx
 
 如果你使用 Nginx 服务器，在你的站点配置中加入以下内容，它将会将所有请求引导到 index.php 前端控制器中：
