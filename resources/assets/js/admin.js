@@ -5,6 +5,7 @@
  */
 
 // require('./bootstrap');
+import Vue from 'vue';
 import App from './Admin.vue'
 import VueRouter from 'vue-router'
 import router from './router/admin.js'
@@ -15,7 +16,8 @@ import 'highlight.js'
 import 'katex'
 import element from 'element-ui';
 import './static/css/icon.css';
-
+//是否生产模式
+// Vue.config.productionTip = false;
 window.Vue = require('vue');
 //use
 Vue.use(mavonEditor);

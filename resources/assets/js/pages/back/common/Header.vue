@@ -44,27 +44,27 @@
     </div>
 </template>
 <script>
-    import bus from '../common/bus';
+    import bus from './bus';
     export default {
         data() {
             return {
                 collapse: true,
                 fullscreen: false,
-                name: 'linxin',
+                name: 'hhb',
                 message: 2
             }
         },
         computed:{
             username(){
-                let username = localStorage.getItem('ms_username');
-                return username ? username : this.name;
+                return this.name;
             }
         },
         methods:{
             // 用户名下拉菜单选择事件
             handleCommand(command) {
                 if(command == 'loginout'){
-                    localStorage.removeItem('ms_username')
+                    localStorage.removeItem('token');
+
                     this.$router.push('/login');
                 }
             },

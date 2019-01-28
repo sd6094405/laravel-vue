@@ -37,7 +37,7 @@
             <ul class="list-group">
                 <li class="list-group-item" style="">
                     <span class="badge">8330</span>
-                    <a href="https://hehongbo.cn/article/1" target="_blank">
+                    <a href="https://hhbcode.cn/article/36" target="_blank">
                         Laravel-Vue-Blog 安装文档...
                     </a>
                 </li>
