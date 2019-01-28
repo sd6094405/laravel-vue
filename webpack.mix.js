@@ -44,9 +44,20 @@ mix.webpackConfig({
         ]
     }
 });
-mix.js('resources/assets/js/admin.js', 'public/js');
+mix.extend('cssModules', function(webpackConfig) {
+    webpackConfig.module.rules.forEach( module => {
+        if(module.loader !== 'vue-loader')
+            return;
+        module.options.cssModules = {
+            localIdentName: '[name]-[hash:base64:5]',
+            camelCase: true,
+        };
+    });
+});
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix.cssModules().js('resources/assets/js/admin.js', 'public/js');
+
+mix.cssModules().js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css');
 
 
