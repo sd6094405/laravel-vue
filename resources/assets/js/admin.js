@@ -12,12 +12,19 @@ import router from './router/admin.js'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import 'github-markdown-css'
-import 'highlight.js'
 import 'katex'
 import element from 'element-ui';
 import './static/css/icon.css';
+import hljs from "highlight.js";
 //是否生产模式
 // Vue.config.productionTip = false;
+Vue.directive('highlight', (el) => {
+    let blocks = el.querySelectorAll('pre code')
+    blocks.forEach((block) => {
+        hljs.highlightBlock(block)
+    })
+})
+
 window.Vue = require('vue');
 //use
 Vue.use(mavonEditor);

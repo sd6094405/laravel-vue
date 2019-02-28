@@ -12,9 +12,9 @@ import router from './router/index.js'
 // import mavonEditor from 'mavon-editor'
 // import 'mavon-editor/dist/css/index.css'
 import {Loading, Button, Select, Pagination} from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
 import hljs from 'highlight.js'
-import 'highlight.js/styles/monokai-sublime.css'
+// import 'highlight.js/styles/monokai-sublime.css'
 //是否生产模式
 // Vue.config.productionTip = false;
 Vue.directive('highlight', (el) => {

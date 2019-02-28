@@ -108,6 +108,10 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    //Geo Ip
+
+    'geo_path' => env('GEO_IP_PATH'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -208,6 +212,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        //三方包
 
     ],
 
