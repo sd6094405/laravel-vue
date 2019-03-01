@@ -6,5 +6,5 @@
  * Time: 19:04
  */
 return [
-    'token_expiration_time'     =>      60 * 30
+    'token_expiration_time'     =>      60 * 60 * 24
 ];
