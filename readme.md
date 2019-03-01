@@ -29,7 +29,10 @@
  
  *vue*
  - 1.npm install Or yarn install
+ #####本地开发
  - 2.npm run watch-poll Or yarn run watch-poll
+ #####正式使用
+ - 3.npm run prod
  
  *如果执行打包时出现 报错，请多打包1-2次*
 ## Nginx
