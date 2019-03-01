@@ -5,13 +5,13 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <p style="margin-top:15px;">
-                            <a href="http://moell.cn" target="_blank"><strong>Powered by 咸鱼王</strong></a>
+                            <a href="https://www.hhbcode.cn" target="_blank"><strong>Powered by 咸鱼王</strong></a>
                             &nbsp;&nbsp;
-                            <a href="https://github.com/moell-peng/moell-blog" target="_blank">
+                            <a href="https://github.com/sd6094405/laravel-vue" target="_blank">
                                 <span class="icon-github" style="padding-right:20px;"></span>
                             </a>
                         </p>
-                        <p>蜀ICP备18033382号</p>
+                        <p>蜀ICP备19003103号</p>
                     </div>
                 </div>
             </div>
