@@ -31,20 +31,20 @@
         </span>
       </div>
     </div>
-    <div class="panel panel-default">
-      <!-- Default panel contents -->
-      <div class="panel-heading">文章</div>
+    <!-- <div class="panel panel-default"> -->
+    <!-- Default panel contents -->
+    <!-- <div class="panel-heading">文章</div> -->
 
-      <!-- List group -->
-      <!-- <ul class="list-group">
+    <!-- List group -->
+    <!-- <ul class="list-group">
                 <li class="list-group-item" style="">
                     <span class="badge">8330</span>
                     <a href="https://hhbcode.cn/article/36" target="_blank">
                         Laravel-Vue-Blog 安装文档...
                     </a>
                 </li>
-      </ul>-->
-    </div>
+    </ul>-->
+    <!-- </div> -->
     <!-- <div class="panel panel-default"> -->
     <!-- Default panel contents -->
     <!-- <div class="panel-heading">友情链接</div> -->
