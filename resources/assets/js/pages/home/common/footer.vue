@@ -9,12 +9,12 @@
                 <strong>Powered by 咸鱼王</strong>
               </a>
               &nbsp;&nbsp;
-              <a
+              <!-- <a
                 href="https://github.com/sd6094405/laravel-vue"
                 target="_blank"
-              >
-                <span class="icon-github" style="padding-right:20px;"></span>
-              </a>
+              >-->
+              <span class="icon-github" style="padding-right:20px;"></span>
+              <!-- </a> -->
             </p>
             <a href="http://beian.miit.gov.cn">
               <p>蜀ICP备19003103号</p>
