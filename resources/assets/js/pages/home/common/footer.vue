@@ -16,7 +16,7 @@
                 <span class="icon-github" style="padding-right:20px;"></span>
               </a>
             </p>
-            <a href="http://www.miitbeian.gov.cn">
+            <a href="http://beian.miit.gov.cn">
               <p>蜀ICP备19003103号</p>
             </a>
           </div>
